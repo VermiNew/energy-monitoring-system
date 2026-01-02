@@ -169,7 +169,7 @@ function App() {
                   type="range"
                   min="0"
                   max="1000"
-                  step="50"
+                  step="1"
                   value={inputPower}
                   onChange={(e) => setInputPower(parseInt(e.target.value))}
                   className="w-full h-1.5 rounded-full outline-none cursor-pointer"
@@ -186,7 +186,7 @@ function App() {
                   type="range"
                   min="0"
                   max="1000"
-                  step="50"
+                  step="1"
                   value={outputPower}
                   onChange={(e) => setOutputPower(parseInt(e.target.value))}
                   className="w-full h-1.5 rounded-full outline-none cursor-pointer"
