@@ -3,6 +3,7 @@ import { HeaderSection } from './components/HeaderSection'
 import { BatterySection } from './components/BatterySection'
 import { InputSection } from './components/InputSection'
 import { OutputSection } from './components/OutputSection'
+import { StorageSection } from './components/StorageSection'
 
 function App() {
   // TODO: Move to state management
@@ -18,6 +19,7 @@ function App() {
         <BatterySection />
         <InputSection />
         <OutputSection />
+        <StorageSection />
       </main>
     </div>
   )
