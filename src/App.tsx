@@ -5,7 +5,7 @@ import { BatterySection } from './components/BatterySection'
 import { InputSection } from './components/InputSection'
 import { OutputSection } from './components/OutputSection'
 import { StorageSection } from './components/StorageSection'
-import { SystemDetailView } from './components/SystemDetailView'
+import { SystemDetailView, type StorageUnit } from './components/SystemDetailView'
 
 function App() {
   const [showSystemDetail, setShowSystemDetail] = useState(false)
@@ -19,12 +19,22 @@ function App() {
   const [sourceNames, setSourceNames] = useState(['Solar', 'Grid', 'Car', 'Wind'])
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editValue, setEditValue] = useState('')
+  const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([])
 
   // Check for ?demo parameter in URL
   const showDemo = typeof window !== 'undefined' && window.location.search.includes('demo')
 
   // Calculate net power
   const netPower = inputPower - outputPower
+
+  // TODO: Integrate with server
+  // Replace the useState calls above with API calls when server is ready
+  // Example structure for storage units from API:
+  // const fetchStorageUnits = async () => {
+  //   const response = await fetch('/api/storage')
+  //   const data = await response.json()
+  //   setStorageUnits(data)
+  // }
 
   const handleDoubleClick = (index: number) => {
     setEditingIndex(index)
@@ -69,6 +79,7 @@ function App() {
         setOutputPower={setOutputPower}
         inputPower={inputPower}
         outputPower={outputPower}
+        storageUnits={storageUnits}
       />
     )
   }

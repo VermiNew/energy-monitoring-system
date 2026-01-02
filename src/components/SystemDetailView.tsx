@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react'
 
+export interface StorageUnit {
+  id: number
+  capacity: string
+  temperature: string
+  voltage: string
+  level: string
+  current: string
+}
+
 interface SystemDetailViewProps {
   onBack: () => void
   batteryLevel: number
@@ -13,6 +22,7 @@ interface SystemDetailViewProps {
   setOutputPower: (power: number) => void
   inputPower: number
   outputPower: number
+  storageUnits?: StorageUnit[]
 }
 
 export function SystemDetailView({
@@ -27,7 +37,8 @@ export function SystemDetailView({
   setInputPower,
   setOutputPower,
   inputPower,
-  outputPower
+  outputPower,
+  storageUnits = []
 }: SystemDetailViewProps) {
   const [time, setTime] = useState<string>('')
 
@@ -156,110 +167,54 @@ export function SystemDetailView({
           <div>
             <h3 className="text-sm text-slate-400 font-semibold mb-4">Storage and Conversion</h3>
             <div className="space-y-3">
-              <div className="rounded-xl p-4" style={{
-                background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
-                border: '1px solid rgba(59, 130, 246, 0.3)'
-              }}>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-6 h-6 rounded flex items-center justify-center" style={{
-                        background: 'rgba(59, 130, 246, 0.2)',
-                        border: '1px solid rgba(59, 130, 246, 0.4)'
-                      }}>
-                        <span className="text-xs text-blue-400 font-bold">1</span>
-                      </div>
-                      <span className="text-lg font-bold text-white">3kWh</span>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs">🌡️</span>
-                        <span className="text-sm text-slate-300 font-medium">15°C</span>
-                      </div>
-                      <div className="text-xs text-slate-400">52.30V</div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end justify-between">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{
-                      background: 'rgba(16, 185, 129, 0.2)',
-                      border: '1px solid rgba(16, 185, 129, 0.4)'
-                    }}>
-                      <span style={{fontSize: '24px'}}>🔋</span>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white" style={{fontFamily: '"Orbitron", monospace'}}>30%</div>
-                      <div className="text-xs text-slate-400">-0.11A</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-xl p-4" style={{
-                background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
-                border: '1px solid rgba(59, 130, 246, 0.3)'
-              }}>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-6 h-6 rounded flex items-center justify-center" style={{
-                        background: 'rgba(59, 130, 246, 0.2)',
-                        border: '1px solid rgba(59, 130, 246, 0.4)'
-                      }}>
-                        <span className="text-xs text-blue-400 font-bold">2</span>
-                      </div>
-                      <span className="text-lg font-bold text-white">3kWh</span>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs">🌡️</span>
-                        <span className="text-sm text-slate-300 font-medium">16°C</span>
-                      </div>
-                      <div className="text-xs text-slate-400">52.30V</div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end justify-between">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{
-                      background: 'rgba(16, 185, 129, 0.2)',
-                      border: '1px solid rgba(16, 185, 129, 0.4)'
-                    }}>
-                      <span style={{fontSize: '24px'}}>🔋</span>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-white" style={{fontFamily: '"Orbitron", monospace'}}>28%</div>
-                      <div className="text-xs text-slate-400">-0.16A</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-xl p-4" style={{
-                background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
-                border: '2px solid rgba(239, 68, 68, 0.3)'
-              }}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded flex items-center justify-center" style={{
-                      background: 'rgba(59, 130, 246, 0.2)',
-                      border: '1px solid rgba(59, 130, 246, 0.4)'
-                    }}>
-                      <span className="text-xs text-blue-400 font-bold">3</span>
-                    </div>
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{
-                      background: 'rgba(239, 68, 68, 0.2)',
-                      border: '1px solid rgba(239, 68, 68, 0.4)'
-                    }}>
-                      <span className="text-xl font-bold text-red-400">DC</span>
-                    </div>
-                  </div>
-                  <button className="w-8 h-8 rounded-full flex items-center justify-center" style={{
-                    background: 'rgba(239, 68, 68, 0.2)',
-                    border: '1px solid rgba(239, 68, 68, 0.4)',
-                    color: '#ef4444'
+              {storageUnits.length > 0 ? (
+                storageUnits.map((unit) => (
+                  <div key={unit.id} className="rounded-xl p-4" style={{
+                    background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
+                    border: '1px solid rgba(59, 130, 246, 0.3)'
                   }}>
-                    ✕
-                  </button>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-6 h-6 rounded flex items-center justify-center" style={{
+                            background: 'rgba(59, 130, 246, 0.2)',
+                            border: '1px solid rgba(59, 130, 246, 0.4)'
+                          }}>
+                            <span className="text-xs text-blue-400 font-bold">{unit.id}</span>
+                          </div>
+                          <span className="text-lg font-bold text-white">{unit.capacity}</span>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs">🌡️</span>
+                            <span className="text-sm text-slate-300 font-medium">{unit.temperature}</span>
+                          </div>
+                          <div className="text-xs text-slate-400">{unit.voltage}</div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end justify-between">
+                        <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{
+                          background: 'rgba(16, 185, 129, 0.2)',
+                          border: '1px solid rgba(16, 185, 129, 0.4)'
+                        }}>
+                          <span style={{fontSize: '24px'}}>🔋</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-2xl font-bold text-white" style={{fontFamily: '"Orbitron", monospace'}}>{unit.level}</div>
+                          <div className="text-xs text-slate-400">{unit.current}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-xl p-4" style={{
+                  background: 'rgba(15, 23, 42, 0.6)',
+                  border: '1px dashed rgba(59, 130, 246, 0.3)'
+                }}>
+                  <p className="text-center text-slate-400 text-sm m-0">Awaiting server data...</p>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
