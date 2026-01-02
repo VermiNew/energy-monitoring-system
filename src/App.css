@@ -210,6 +210,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .toggle-label {
@@ -385,4 +386,174 @@
 
 .error-button:hover {
   background: rgba(211, 47, 47, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .power-station-gui {
+    padding: 1rem;
+  }
+
+  .gui-header {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .gui-time-container {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .gui-main {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .battery-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .battery-visual {
+    width: 50px;
+    height: 180px;
+  }
+
+  .battery-display {
+    font-size: 2rem;
+  }
+
+  .power-display {
+    min-height: 80px;
+  }
+
+  .power-value {
+    font-size: 2.5rem;
+  }
+
+  .sources-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .storage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .storage-card {
+    padding: 0.75rem;
+  }
+
+  .toggle-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .power-station-gui {
+    padding: 0.75rem;
+  }
+
+  .gui-title {
+    font-size: 1.25rem;
+  }
+
+  .gui-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .gui-time {
+    font-size: 1rem;
+  }
+
+  .net-power {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .battery-section,
+  .input-section,
+  .output-section {
+    padding: 1rem;
+  }
+
+  .available-time {
+    gap: 1rem;
+  }
+
+  .time-value {
+    font-size: 2rem;
+  }
+
+  .time-label {
+    font-size: 0.75rem;
+  }
+
+  .battery-percentage {
+    font-size: 2rem;
+  }
+
+  .power-value {
+    font-size: 2rem;
+  }
+
+  .power-unit {
+    font-size: 1.25rem;
+  }
+
+  .sources-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .source-item {
+    padding: 0.5rem;
+  }
+
+  .source-name {
+    font-size: 0.7rem;
+  }
+
+  .source-power {
+    font-size: 0.75rem;
+  }
+
+  .storage-title {
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .storage-card {
+    padding: 0.5rem;
+  }
+
+  .level-percentage {
+    font-size: 1.25rem;
+  }
+
+  .level-current {
+    font-size: 0.65rem;
+  }
+
+  .toggle-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toggle-button {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    width: 100%;
+  }
+
+  .toggle-label-with-icon {
+    font-size: 0.9rem;
+  }
+
+  .toggle-label-with-icon svg {
+    width: 16px;
+    height: 16px;
+  }
 }
