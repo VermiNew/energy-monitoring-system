@@ -1,11 +1,20 @@
-import { useState } from 'react'
 import { Zap } from 'lucide-react'
 
-export function OutputSection() {
-  const [outputPower] = useState(0)
-  const [acEnabled, setAcEnabled] = useState(false)
-  const [dcEnabled, setDcEnabled] = useState(false)
+interface OutputSectionProps {
+  outputPower: number
+  acEnabled: boolean
+  dcEnabled: boolean
+  onAcToggle: () => void
+  onDcToggle: () => void
+}
 
+export function OutputSection({
+  outputPower,
+  acEnabled,
+  dcEnabled,
+  onAcToggle,
+  onDcToggle
+}: OutputSectionProps) {
   return (
     <section className="output-section">
       <div className="power-display">
@@ -21,7 +30,7 @@ export function OutputSection() {
           </div>
           <button
             className={`toggle-button ${acEnabled ? 'enabled' : ''}`}
-            onClick={() => setAcEnabled(!acEnabled)}
+            onClick={onAcToggle}
           >
             {acEnabled ? 'ON' : 'OFF'}
           </button>
@@ -36,7 +45,7 @@ export function OutputSection() {
           </div>
           <button
             className={`toggle-button ${dcEnabled ? 'enabled' : ''}`}
-            onClick={() => setDcEnabled(!dcEnabled)}
+            onClick={onDcToggle}
           >
             {dcEnabled ? 'ON' : 'OFF'}
           </button>

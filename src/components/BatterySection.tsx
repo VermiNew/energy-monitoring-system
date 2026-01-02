@@ -1,9 +1,10 @@
-import { useState } from 'react'
+interface BatterySectionProps {
+  batteryLevel: number
+  availableDays: number
+  availableHours: number
+}
 
-export function BatterySection() {
-  const [batteryLevel] = useState(0)
-  const [availableDays] = useState(0)
-  const [availableHours] = useState(0)
+export function BatterySection({ batteryLevel, availableDays, availableHours }: BatterySectionProps) {
 
   const getBatteryColor = () => {
     if (batteryLevel > 50) return '#10b981'

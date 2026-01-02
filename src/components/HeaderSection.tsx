@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react'
 interface HeaderSectionProps {
   inputPower?: number
   outputPower?: number
+  netPower?: number
   onShowSystem?: () => void
 }
 
-export function HeaderSection({ inputPower = 0, outputPower = 0, onShowSystem }: HeaderSectionProps) {
+export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0, onShowSystem }: HeaderSectionProps) {
   const [time, setTime] = useState<string>('')
-  const netPower = inputPower - outputPower
 
   useEffect(() => {
     const updateTime = () => {

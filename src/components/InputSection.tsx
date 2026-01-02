@@ -1,9 +1,24 @@
-import { useState } from 'react'
+interface InputSectionProps {
+  inputPower: number
+  sourceNames: string[]
+  editingIndex: number | null
+  editValue: string
+  onDoubleClick: (index: number) => void
+  onNameChange: (value: string) => void
+  onNameSave: (index: number) => void
+  onKeyDown: (e: React.KeyboardEvent, index: number) => void
+}
 
-export function InputSection() {
-  const [inputPower] = useState(0)
-  const sourceNames = ['SN1', 'SN2', 'SN3', 'SN4']
-
+export function InputSection({
+  inputPower,
+  sourceNames,
+  editingIndex,
+  editValue,
+  onDoubleClick,
+  onNameChange,
+  onNameSave,
+  onKeyDown
+}: InputSectionProps) {
   return (
     <section className="input-section">
       <div className="power-display">
@@ -13,12 +28,31 @@ export function InputSection() {
 
       <div className="sources-grid">
         {sourceNames.map((source, index) => (
-          <div key={index} className="source-item">
-            <div className="source-name">{source}</div>
+          <div 
+            key={index} 
+            className="source-item"
+            onDoubleClick={() => onDoubleClick(index)}
+            title="Double click to edit"
+          >
+            {editingIndex === index ? (
+              <input
+                type="text"
+                value={editValue}
+                onChange={(e) => onNameChange(e.target.value)}
+                onBlur={() => onNameSave(index)}
+                onKeyDown={(e) => onKeyDown(e, index)}
+                autoFocus
+                className="source-input"
+                style={{fontFamily: 'inherit'}}
+              />
+            ) : (
+              <div className="source-name">{source}</div>
+            )}
             <div className="source-power">0W</div>
           </div>
         ))}
       </div>
+      <div className="edit-hint">💡 Double click to rename sources</div>
     </section>
   )
 }
