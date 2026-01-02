@@ -74,7 +74,9 @@ function App() {
   }
 
   return (
-    <div className="power-station-gui">
+    <div className="min-h-screen p-5 font-rajdhani" style={{
+      background: 'linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%)'
+    }}>
       <HeaderSection 
         inputPower={inputPower} 
         outputPower={outputPower}
@@ -83,7 +85,7 @@ function App() {
       />
 
       {/* Main Grid */}
-      <main className="gui-main">
+      <main className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         <BatterySection 
           batteryLevel={batteryLevel}
           availableDays={availableDays}
