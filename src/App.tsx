@@ -74,44 +74,176 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen p-5 font-rajdhani" style={{
-      background: 'linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%)'
+    <div className="min-h-screen flex items-center justify-center p-5" style={{
+      background: 'linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%)',
+      fontFamily: '"Orbitron", "Rajdhani", -apple-system, sans-serif'
     }}>
-      <HeaderSection 
-        inputPower={inputPower} 
-        outputPower={outputPower}
-        netPower={netPower}
-        onShowSystem={() => setShowSystemDetail(true)}
-      />
+      <div className="w-full max-w-7xl rounded-3xl p-8 shadow-2xl" style={{
+        background: 'linear-gradient(145deg, #1e293b 0%, #0f172a 100%)',
+        border: '1px solid rgba(59, 130, 246, 0.2)'
+      }}>
+        <HeaderSection 
+          inputPower={inputPower} 
+          outputPower={outputPower}
+          netPower={netPower}
+        />
 
-      {/* Main Grid */}
-      <main className="mt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <BatterySection 
-            batteryLevel={batteryLevel}
-            availableDays={availableDays}
-            availableHours={availableHours}
-          />
-          <InputSection 
-            inputPower={inputPower}
-            sourceNames={sourceNames}
-            editingIndex={editingIndex}
-            editValue={editValue}
-            onDoubleClick={handleDoubleClick}
-            onNameChange={handleNameChange}
-            onNameSave={handleNameSave}
-            onKeyDown={handleKeyDown}
-          />
-          <OutputSection 
-            outputPower={outputPower}
-            acEnabled={acEnabled}
-            dcEnabled={dcEnabled}
-            onAcToggle={() => setAcEnabled(!acEnabled)}
-            onDcToggle={() => setDcEnabled(!dcEnabled)}
-          />
-        </div>
-        <StorageSection />
-      </main>
+        {/* Main Grid */}
+        <main className="mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <BatterySection 
+              batteryLevel={batteryLevel}
+              availableDays={availableDays}
+              availableHours={availableHours}
+              onShowSystem={() => setShowSystemDetail(true)}
+            />
+            <InputSection 
+              inputPower={inputPower}
+              sourceNames={sourceNames}
+              editingIndex={editingIndex}
+              editValue={editValue}
+              onDoubleClick={handleDoubleClick}
+              onNameChange={handleNameChange}
+              onNameSave={handleNameSave}
+              onKeyDown={handleKeyDown}
+            />
+            <OutputSection 
+              outputPower={outputPower}
+              acEnabled={acEnabled}
+              dcEnabled={dcEnabled}
+              onAcToggle={() => setAcEnabled(!acEnabled)}
+              onDcToggle={() => setDcEnabled(!dcEnabled)}
+            />
+          </div>
+        </main>
+
+        {showDemo && (
+          <div className="mt-8 p-5 rounded-xl" style={{
+            background: 'rgba(59, 130, 246, 0.05)',
+            border: '1px solid rgba(59, 130, 246, 0.2)'
+          }}>
+            <h3 className="text-sm text-slate-400 font-semibold uppercase tracking-wider mb-4 m-0">Demo Controls</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs text-slate-500 mb-2 font-semibold">
+                  Battery Level: {batteryLevel}%
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={batteryLevel}
+                  onChange={(e) => {
+                    const level = parseInt(e.target.value)
+                    setBatteryLevel(level)
+                    if (level === 0) {
+                      setAvailableDays(0)
+                      setAvailableHours(0)
+                    } else {
+                      setAvailableDays(99)
+                      setAvailableHours(23)
+                    }
+                  }}
+                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                  style={{
+                    background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${batteryLevel}%, #1e293b ${batteryLevel}%, #1e293b 100%)`
+                  }}
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-slate-500 mb-2 font-semibold">
+                  Input Power: {inputPower}W
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="50"
+                  value={inputPower}
+                  onChange={(e) => setInputPower(parseInt(e.target.value))}
+                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                  style={{
+                    background: `linear-gradient(to right, #10b981 0%, #10b981 ${inputPower/10}%, #1e293b ${inputPower/10}%, #1e293b 100%)`
+                  }}
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-slate-500 mb-2 font-semibold">
+                  Output Power: {outputPower}W
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="50"
+                  value={outputPower}
+                  onChange={(e) => setOutputPower(parseInt(e.target.value))}
+                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                  style={{
+                    background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${outputPower/10}%, #1e293b ${outputPower/10}%, #1e293b 100%)`
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+          
+          @keyframes shimmer {
+            0% {
+              background-position: 0% 0%;
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            40% {
+              background-position: 0% 100%;
+              opacity: 1;
+            }
+            50% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 0;
+              background-position: 0% 0%;
+            }
+          }
+          
+          .shimmer-animation {
+            animation: shimmer 4s ease-in-out infinite;
+          }
+          
+          input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+          }
+          
+          input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+            border: 2px solid #3b82f6;
+          }
+          
+          input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+            border: 2px solid #3b82f6;
+          }
+        `}</style>
+      </div>
     </div>
   )
 }
