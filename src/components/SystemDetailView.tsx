@@ -103,18 +103,28 @@ export function SystemDetailView({
           <div>
             <div className="mb-8">
               <p className="text-sm text-slate-400 font-medium mb-4">Available Time</p>
-              <div className="flex items-baseline gap-3">
-                <div className="text-center">
-                  <div className="text-6xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
-                    {availableDays}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-xl p-4" style={{
+                  background: 'rgba(15, 23, 42, 0.6)',
+                  border: '1px solid rgba(16, 185, 129, 0.3)'
+                }}>
+                  <div className="text-center">
+                    <div className="text-5xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
+                      {availableDays}
+                    </div>
+                    <div className="text-xs text-slate-400 font-semibold mt-3 uppercase tracking-wide">Days</div>
                   </div>
-                  <div className="text-sm text-slate-400 font-semibold mt-2">Days</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-6xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
-                    {availableHours}
+                <div className="rounded-xl p-4" style={{
+                  background: 'rgba(15, 23, 42, 0.6)',
+                  border: '1px solid rgba(16, 185, 129, 0.3)'
+                }}>
+                  <div className="text-center">
+                    <div className="text-5xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
+                      {availableHours}
+                    </div>
+                    <div className="text-xs text-slate-400 font-semibold mt-3 uppercase tracking-wide">Hrs</div>
                   </div>
-                  <div className="text-sm text-slate-400 font-semibold mt-2">Hrs</div>
                 </div>
               </div>
             </div>
