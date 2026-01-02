@@ -2,13 +2,34 @@ import { useState, useEffect } from 'react'
 
 interface SystemDetailViewProps {
   onBack: () => void
+  batteryLevel: number
+  availableDays: number
+  availableHours: number
+  showDemo: boolean
+  setBatteryLevel: (level: number) => void
+  setAvailableDays: (days: number) => void
+  setAvailableHours: (hours: number) => void
+  setInputPower: (power: number) => void
+  setOutputPower: (power: number) => void
+  inputPower: number
+  outputPower: number
 }
 
-export function SystemDetailView({ onBack }: SystemDetailViewProps) {
+export function SystemDetailView({
+  onBack,
+  batteryLevel,
+  availableDays,
+  availableHours,
+  showDemo,
+  setBatteryLevel,
+  setAvailableDays,
+  setAvailableHours,
+  setInputPower,
+  setOutputPower,
+  inputPower,
+  outputPower
+}: SystemDetailViewProps) {
   const [time, setTime] = useState<string>('')
-  const [batteryLevel] = useState(29)
-  const [availableDays] = useState(99)
-  const [availableHours] = useState(23)
 
   useEffect(() => {
     const updateTime = () => {
@@ -130,6 +151,65 @@ export function SystemDetailView({ onBack }: SystemDetailViewProps) {
           </div>
         </div>
       </div>
+
+      {showDemo && (
+        <div className="demo-controls">
+          <h3 className="demo-title">Demo Controls</h3>
+          <div className="demo-grid">
+            <div className="demo-control">
+              <label className="demo-label">
+                Battery Level: {batteryLevel}%
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={batteryLevel}
+                onChange={(e) => {
+                  const level = parseInt(e.target.value)
+                  setBatteryLevel(level)
+                  if (level === 0) {
+                    setAvailableDays(0)
+                    setAvailableHours(0)
+                  } else {
+                    setAvailableDays(99)
+                    setAvailableHours(23)
+                  }
+                }}
+                className="demo-slider"
+              />
+            </div>
+            <div className="demo-control">
+              <label className="demo-label">
+                Input Power: {inputPower}W
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                step="50"
+                value={inputPower}
+                onChange={(e) => setInputPower(parseInt(e.target.value))}
+                className="demo-slider"
+              />
+            </div>
+            <div className="demo-control">
+              <label className="demo-label">
+                Output Power: {outputPower}W
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                step="50"
+                value={outputPower}
+                onChange={(e) => setOutputPower(parseInt(e.target.value))}
+                className="demo-slider"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
