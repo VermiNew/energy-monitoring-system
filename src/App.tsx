@@ -85,29 +85,31 @@ function App() {
       />
 
       {/* Main Grid */}
-      <main className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <BatterySection 
-          batteryLevel={batteryLevel}
-          availableDays={availableDays}
-          availableHours={availableHours}
-        />
-        <InputSection 
-          inputPower={inputPower}
-          sourceNames={sourceNames}
-          editingIndex={editingIndex}
-          editValue={editValue}
-          onDoubleClick={handleDoubleClick}
-          onNameChange={handleNameChange}
-          onNameSave={handleNameSave}
-          onKeyDown={handleKeyDown}
-        />
-        <OutputSection 
-          outputPower={outputPower}
-          acEnabled={acEnabled}
-          dcEnabled={dcEnabled}
-          onAcToggle={() => setAcEnabled(!acEnabled)}
-          onDcToggle={() => setDcEnabled(!dcEnabled)}
-        />
+      <main className="mt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <BatterySection 
+            batteryLevel={batteryLevel}
+            availableDays={availableDays}
+            availableHours={availableHours}
+          />
+          <InputSection 
+            inputPower={inputPower}
+            sourceNames={sourceNames}
+            editingIndex={editingIndex}
+            editValue={editValue}
+            onDoubleClick={handleDoubleClick}
+            onNameChange={handleNameChange}
+            onNameSave={handleNameSave}
+            onKeyDown={handleKeyDown}
+          />
+          <OutputSection 
+            outputPower={outputPower}
+            acEnabled={acEnabled}
+            dcEnabled={dcEnabled}
+            onAcToggle={() => setAcEnabled(!acEnabled)}
+            onDcToggle={() => setDcEnabled(!dcEnabled)}
+          />
+        </div>
         <StorageSection />
       </main>
     </div>
