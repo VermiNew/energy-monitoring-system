@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Zap } from 'lucide-react'
 
 interface HeaderSectionProps {
   inputPower?: number
@@ -25,32 +26,53 @@ export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0, o
   }, [])
 
   return (
-    <header className="flex items-center justify-between pb-5 border-b border-blue-500/20">
-      <div>
-        <h1 className="text-2xl font-bold text-white tracking-wide font-orbitron m-0">Power Station</h1>
-        <p className="text-sm text-slate-400 m-0 font-normal">Energy Management System</p>
+    <header className="flex items-center justify-between pb-5" style={{
+      borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
+    }}>
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{
+          background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+          boxShadow: '0 0 20px rgba(59, 130, 246, 0.4)'
+        }}>
+          <Zap size={28} color="#fff" />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-white tracking-wide m-0" style={{fontFamily: '"Orbitron", "Rajdhani", -apple-system, sans-serif'}}>POWER STATION</h1>
+          <p className="text-xs text-slate-500 font-medium m-0">Energy Management System</p>
+        </div>
       </div>
-      <div className="flex gap-6 items-center">
-        <div className="px-4 py-2 rounded-lg text-sm font-semibold border border-blue-500/30 bg-blue-500/10 text-blue-400 font-orbitron">
+      <div className="flex items-center gap-4">
+        <div className="px-4 py-2 rounded-lg text-sm font-semibold" style={{
+          background: netPower === 0 
+            ? 'rgba(100, 116, 139, 0.1)' 
+            : netPower > 0 
+            ? 'rgba(16, 185, 129, 0.1)' 
+            : 'rgba(239, 68, 68, 0.1)',
+          border: `1px solid ${netPower === 0 
+            ? 'rgba(100, 116, 139, 0.3)' 
+            : netPower > 0 
+            ? 'rgba(16, 185, 129, 0.3)' 
+            : 'rgba(239, 68, 68, 0.3)'}`,
+          color: netPower === 0 
+            ? '#94a3b8' 
+            : netPower > 0 
+            ? '#10b981' 
+            : '#ef4444',
+          fontFamily: '"Orbitron", monospace'
+        }}>
+          <div>{netPower > 0 ? '+' : ''}{netPower}W</div>
+          <div className="text-xs opacity-70">
+            {netPower === 0 ? 'Balanced' : netPower > 0 ? 'Charging' : 'Discharging'}
+          </div>
+        </div>
+        <div className="px-4 py-2 rounded-lg text-sm font-semibold" style={{
+          background: 'rgba(59, 130, 246, 0.1)',
+          border: '1px solid rgba(59, 130, 246, 0.3)',
+          color: '#60a5fa',
+          fontFamily: '"Orbitron", monospace'
+        }}>
           {time}
         </div>
-        <div className={`px-4 py-2 rounded-lg text-sm font-semibold border font-rajdhani ${
-          netPower > 0 
-            ? 'bg-green-500/10 border-green-500/30 text-green-400' 
-            : netPower < 0 
-            ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
-            : 'bg-slate-500/10 border-slate-500/30 text-slate-400'
-        }`}>
-          {netPower > 0 ? '+' : netPower < 0 ? '' : '±'} {Math.abs(netPower)}W
-        </div>
-        {onShowSystem && (
-          <button 
-            onClick={onShowSystem}
-            className="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-all border border-blue-500/50"
-          >
-            System
-          </button>
-        )}
       </div>
     </header>
   )
