@@ -1,11 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   theme: {
-    extend: {
-      fontFamily: {
-        orbitron: ['Orbitron', 'monospace'],
-        rajdhani: ['Rajdhani', 'sans-serif'],
-      },
+    fontFamily: {
+      orbitron: ['Orbitron', { fontFeatureSettings: '"cv11"' }],
+      rajdhani: ['Rajdhani', 'system-ui', '-apple-system', 'sans-serif'],
     },
+    extend: {},
   },
 }
