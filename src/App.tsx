@@ -5,9 +5,13 @@ import { InputSection } from './components/InputSection'
 import { OutputSection } from './components/OutputSection'
 
 function App() {
+  // TODO: Move to state management
+  const inputPower = 0
+  const outputPower = 0
+
   return (
     <div className="power-station-gui">
-      <HeaderSection />
+      <HeaderSection inputPower={inputPower} outputPower={outputPower} />
 
       {/* Main Grid */}
       <main className="gui-main">

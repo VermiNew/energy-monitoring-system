@@ -26,11 +26,40 @@
   font-weight: normal;
 }
 
+.gui-time-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
 .gui-time {
   font-size: 1.25rem;
   color: #666;
   font-weight: 600;
   font-family: 'Courier New', monospace;
+}
+
+.net-power {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
+.net-power.charging {
+  background: #c8e6c9;
+  color: #2e7d32;
+}
+
+.net-power.discharging {
+  background: #ffccbc;
+  color: #d84315;
+}
+
+.net-power.neutral {
+  background: #eeeeee;
+  color: #666;
 }
 
 .gui-main {
