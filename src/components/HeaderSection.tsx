@@ -19,7 +19,10 @@ export function HeaderSection() {
 
   return (
     <header className="gui-header">
-      <h1 className="gui-title">Power Station</h1>
+      <div>
+        <h1 className="gui-title">Power Station</h1>
+        <p className="gui-subtitle">Energy Management System</p>
+      </div>
       <div className="gui-time">{time}</div>
     </header>
   )
