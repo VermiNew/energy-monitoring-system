@@ -1,5 +1,6 @@
 import './App.css'
 import { BatterySection } from './components/BatterySection'
+import { InputSection } from './components/InputSection'
 
 function App() {
   return (
@@ -12,15 +13,7 @@ function App() {
       {/* Main Grid */}
       <main className="gui-main">
         <BatterySection />
-
-        {/* Input Section */}
-        <section className="input-section">
-          {/* Input Power Display */}
-          <div className="power-display"></div>
-
-          {/* Sources Grid */}
-          <div className="sources-grid"></div>
-        </section>
+        <InputSection />
 
         {/* Output Section */}
         <section className="output-section">
