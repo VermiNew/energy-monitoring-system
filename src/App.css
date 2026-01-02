@@ -90,13 +90,33 @@
 .battery-container {
   min-height: 200px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 1.5rem;
+  align-items: flex-end;
+}
+
+.battery-visual {
+  width: 40px;
+  height: 150px;
+  background: #e0e0e0;
+  border: 2px solid #999;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.battery-bar {
+  width: 100%;
+  background: #333;
+  position: absolute;
+  bottom: 0;
+  transition: height 0.3s ease, background-color 0.3s ease;
 }
 
 .battery-display {
   font-size: 3rem;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
 .battery-percentage {
