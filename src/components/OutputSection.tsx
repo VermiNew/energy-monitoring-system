@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Zap } from 'lucide-react'
 
 export function OutputSection() {
   const [outputPower] = useState(0)
@@ -14,7 +15,10 @@ export function OutputSection() {
 
       <div className="toggle-container">
         <div className="toggle-item">
-          <div className="toggle-label">AC</div>
+          <div className="toggle-label-with-icon">
+            <Zap size={18} />
+            <span>AC</span>
+          </div>
           <button
             className={`toggle-button ${acEnabled ? 'enabled' : ''}`}
             onClick={() => setAcEnabled(!acEnabled)}
@@ -26,7 +30,10 @@ export function OutputSection() {
 
       <div className="toggle-container">
         <div className="toggle-item">
-          <div className="toggle-label">DC</div>
+          <div className="toggle-label-with-icon">
+            <Zap size={18} />
+            <span>DC</span>
+          </div>
           <button
             className={`toggle-button ${dcEnabled ? 'enabled' : ''}`}
             onClick={() => setDcEnabled(!dcEnabled)}
