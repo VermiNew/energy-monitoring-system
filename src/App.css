@@ -117,3 +117,45 @@
   color: #333;
   font-weight: bold;
 }
+
+.toggle-container {
+  min-height: auto !important;
+  padding: 0 !important;
+  margin-bottom: 1rem;
+}
+
+.toggle-item {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.toggle-button {
+  padding: 0.5rem 1rem;
+  background: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-button:hover {
+  background: #d0d0d0;
+}
+
+.toggle-button.enabled {
+  background: #4caf50;
+  color: white;
+  border-color: #45a049;
+}
