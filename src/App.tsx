@@ -1,4 +1,5 @@
 import './App.css'
+import { BatterySection } from './components/BatterySection'
 
 function App() {
   return (
@@ -10,14 +11,7 @@ function App() {
 
       {/* Main Grid */}
       <main className="gui-main">
-        {/* Battery Section */}
-        <section className="battery-section">
-          {/* Battery Display */}
-          <div className="battery-container"></div>
-
-          {/* Available Time */}
-          <div className="available-time"></div>
-        </section>
+        <BatterySection />
 
         {/* Input Section */}
         <section className="input-section">

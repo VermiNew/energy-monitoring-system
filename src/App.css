@@ -26,9 +26,47 @@
 .power-display,
 .sources-grid,
 .toggle-container {
-  min-height: 80px;
   background: #f5f5f5;
   padding: 1rem;
   border-radius: 0.25rem;
   margin-bottom: 1rem;
+}
+
+.battery-container {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-display {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.battery-percentage {
+  color: #333;
+}
+
+.available-time {
+  display: flex;
+  gap: 2rem;
+  min-height: auto;
+}
+
+.time-block {
+  flex: 1;
+  text-align: center;
+}
+
+.time-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.time-label {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.5rem;
 }
