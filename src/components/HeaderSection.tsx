@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 interface HeaderSectionProps {
   inputPower?: number
   outputPower?: number
+  onShowSystem?: () => void
 }
 
-export function HeaderSection({ inputPower = 0, outputPower = 0 }: HeaderSectionProps) {
+export function HeaderSection({ inputPower = 0, outputPower = 0, onShowSystem }: HeaderSectionProps) {
   const [time, setTime] = useState<string>('')
   const netPower = inputPower - outputPower
 
@@ -34,6 +35,11 @@ export function HeaderSection({ inputPower = 0, outputPower = 0 }: HeaderSection
         <div className={`net-power ${netPower > 0 ? 'charging' : netPower < 0 ? 'discharging' : 'neutral'}`}>
           {netPower > 0 ? '+' : netPower < 0 ? '' : '±'} {Math.abs(netPower)}W
         </div>
+        {onShowSystem && (
+          <button className="system-button" onClick={onShowSystem}>
+            System
+          </button>
+        )}
       </div>
     </header>
   )
