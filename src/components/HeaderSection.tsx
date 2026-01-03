@@ -37,7 +37,7 @@ export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0, o
           <Zap size={28} color="#fff" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-wide m-0" style={{fontFamily: '"Orbitron", "Rajdhani", -apple-system, sans-serif'}}>POWER STATION</h1>
+          <h1 className="text-2xl font-bold text-white tracking-wide m-0" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>POWER STATION</h1>
           <p className="text-xs text-slate-500 font-medium m-0">Energy Management System</p>
         </div>
       </div>
