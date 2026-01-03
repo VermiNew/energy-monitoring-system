@@ -1,4 +1,3 @@
-import './App.css'
 import { useState } from 'react'
 import { HeaderSection } from './components/HeaderSection'
 import { BatterySection } from './components/BatterySection'
