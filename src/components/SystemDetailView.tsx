@@ -1,30 +1,9 @@
 import { useState, useEffect } from 'react'
 import { ArrowLeft, HelpCircle, Battery, Thermometer } from 'lucide-react'
-
-export interface StorageUnit {
-  id: number
-  capacity: string
-  temperature: string
-  voltage: string
-  level: string
-  current: string
-}
-
-interface SystemDetailViewProps {
-  onBack: () => void
-  batteryLevel: number
-  availableDays: number
-  availableHours: number
-  showDemo: boolean
-  setBatteryLevel: (level: number) => void
-  setAvailableDays: (days: number) => void
-  setAvailableHours: (hours: number) => void
-  setInputPower: (power: number) => void
-  setOutputPower: (power: number) => void
-  inputPower: number
-  outputPower: number
-  storageUnits?: StorageUnit[]
-}
+import type { SystemDetailViewProps } from '../types'
+import { setupTimeInterval } from '../utils/time'
+import { getBatteryColor } from '../utils/colors'
+import { calculateBatteryDashOffset } from '../utils/calculations'
 
 export function SystemDetailView({
   onBack,
@@ -42,28 +21,13 @@ export function SystemDetailView({
   storageUnits = []
 }: SystemDetailViewProps) {
   const [time, setTime] = useState<string>('')
+  const batteryColorValue = getBatteryColor(batteryLevel)
+  const dashOffset = calculateBatteryDashOffset(batteryLevel)
 
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      const hours = String(now.getHours()).padStart(2, '0')
-      const minutes = String(now.getMinutes()).padStart(2, '0')
-      setTime(`${hours}:${minutes}`)
-    }
-
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
+    const cleanup = setupTimeInterval(setTime)
+    return cleanup
   }, [])
-
-  const getBatteryColor = () => {
-    if (batteryLevel > 25) return '#10b981'
-    if (batteryLevel > 15) return '#fbbf24'
-    if (batteryLevel > 10) return '#ff6b00'
-    return '#ef4444'
-  }
-
-  const dashOffset = (batteryLevel / 100) * 314
 
   return (
     <div className="min-h-screen p-5 flex items-center justify-center" style={{
@@ -144,7 +108,7 @@ export function SystemDetailView({
                   <path
                     d="M 20 120 A 100 100 0 0 1 220 120"
                     fill="none"
-                    stroke={getBatteryColor()}
+                    stroke={batteryColorValue}
                     strokeWidth="20"
                     strokeLinecap="round"
                     strokeDasharray={`${dashOffset} 314`}

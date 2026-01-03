@@ -4,7 +4,10 @@ import { BatterySection } from './components/BatterySection'
 import { InputSection } from './components/InputSection'
 import { OutputSection } from './components/OutputSection'
 import { StorageSection } from './components/StorageSection'
-import { SystemDetailView, type StorageUnit } from './components/SystemDetailView'
+import { SystemDetailView } from './components/SystemDetailView'
+import type { StorageUnit } from './types'
+import { calculateNetPower } from './utils/calculations'
+import { isValidSourceName, validateSourceName } from './utils/validators'
 
 function App() {
   const [showSystemDetail, setShowSystemDetail] = useState(false)
@@ -24,7 +27,7 @@ function App() {
   const showDemo = typeof window !== 'undefined' && window.location.search.includes('demo')
 
   // Calculate net power
-  const netPower = inputPower - outputPower
+  const netPower = calculateNetPower(inputPower, outputPower)
 
   // TODO: Integrate with server
   // Replace the useState calls above with API calls when server is ready
@@ -35,26 +38,26 @@ function App() {
   //   setStorageUnits(data)
   // }
 
-  const handleDoubleClick = (index: number) => {
+  const handleDoubleClick = (index: number): void => {
     setEditingIndex(index)
     setEditValue(sourceNames[index])
   }
 
-  const handleNameChange = (value: string) => {
+  const handleNameChange = (value: string): void => {
     setEditValue(value)
   }
 
-  const handleNameSave = (index: number) => {
-    if (editValue.trim()) {
+  const handleNameSave = (index: number): void => {
+    if (isValidSourceName(editValue)) {
       const newNames = [...sourceNames]
-      newNames[index] = editValue.trim()
+      newNames[index] = validateSourceName(editValue)
       setSourceNames(newNames)
     }
     setEditingIndex(null)
     setEditValue('')
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+  const handleKeyDown = (e: React.KeyboardEvent, index: number): void => {
     if (e.key === 'Enter') {
       handleNameSave(index)
     } else if (e.key === 'Escape') {

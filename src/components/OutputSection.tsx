@@ -1,10 +1,5 @@
-interface OutputSectionProps {
-  outputPower: number
-  acEnabled: boolean
-  dcEnabled: boolean
-  onAcToggle: () => void
-  onDcToggle: () => void
-}
+import type { OutputSectionProps } from '../types'
+import { getStatusColor } from '../utils/colors'
 
 export function OutputSection({
   outputPower,
@@ -13,6 +8,7 @@ export function OutputSection({
   onAcToggle,
   onDcToggle
 }: OutputSectionProps) {
+  const statusColor = getStatusColor(acEnabled || dcEnabled)
   return (
     <section className="rounded-2xl p-6 relative overflow-hidden" style={{
       background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
@@ -23,12 +19,12 @@ export function OutputSection({
       }} />
 
       <div className="flex items-center justify-between mb-5 relative z-10">
-        <h2 className="text-sm font-semibold text-slate-400 tracking-widest uppercase m-0">Output</h2>
-        <div className="w-2 h-2 rounded-full" style={{
-          background: (acEnabled || dcEnabled) ? '#10b981' : '#64748b',
-          boxShadow: (acEnabled || dcEnabled) ? '0 0 12px #10b981' : 'none'
-        }} />
-      </div>
+         <h2 className="text-sm font-semibold text-slate-400 tracking-widest uppercase m-0">Output</h2>
+         <div className="w-2 h-2 rounded-full" style={{
+           background: statusColor,
+           boxShadow: (acEnabled || dcEnabled) ? `0 0 12px ${statusColor}` : 'none'
+         }} />
+       </div>
 
       <div className="mb-8 relative z-10">
         <div className="flex items-baseline gap-2">

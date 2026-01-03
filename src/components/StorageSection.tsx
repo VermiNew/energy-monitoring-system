@@ -1,5 +1,15 @@
+interface StorageDevice {
+  id: number
+  capacity: string
+  temperature: number | null
+  voltage: string | null
+  level: number
+  current: string | null
+  error?: boolean
+}
+
 export function StorageSection() {
-  const storages = [
+  const storages: StorageDevice[] = [
     {
       id: 1,
       capacity: '3kWh',

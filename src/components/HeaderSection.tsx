@@ -1,28 +1,16 @@
 import { useState, useEffect } from 'react'
 import { Zap, ArrowRight } from 'lucide-react'
+import type { HeaderSectionProps } from '../types'
+import { setupTimeInterval } from '../utils/time'
+import { getNetPowerColor } from '../utils/colors'
 
-interface HeaderSectionProps {
-  inputPower?: number
-  outputPower?: number
-  netPower?: number
-  onShowSystem?: () => void
-}
-
-export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0, onShowSystem }: HeaderSectionProps) {
+export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0 }: HeaderSectionProps) {
   const [time, setTime] = useState<string>('')
+  const netPowerColor = getNetPowerColor(netPower)
 
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      const hours = String(now.getHours()).padStart(2, '0')
-      const minutes = String(now.getMinutes()).padStart(2, '0')
-      setTime(`${hours}:${minutes}`)
-    }
-
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-
-    return () => clearInterval(interval)
+    const cleanup = setupTimeInterval(setTime)
+    return cleanup
   }, [])
 
   return (
@@ -50,21 +38,9 @@ export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0, o
       </div>
       <div className="flex items-center gap-4">
         <div className="px-4 py-2 rounded-lg text-sm font-semibold" style={{
-          background: netPower === 0 
-            ? 'rgba(100, 116, 139, 0.1)' 
-            : netPower > 0 
-            ? 'rgba(16, 185, 129, 0.1)' 
-            : 'rgba(239, 68, 68, 0.1)',
-          border: `1px solid ${netPower === 0 
-            ? 'rgba(100, 116, 139, 0.3)' 
-            : netPower > 0 
-            ? 'rgba(16, 185, 129, 0.3)' 
-            : 'rgba(239, 68, 68, 0.3)'}`,
-          color: netPower === 0 
-            ? '#94a3b8' 
-            : netPower > 0 
-            ? '#10b981' 
-            : '#ef4444'
+          background: netPowerColor.bg,
+          border: `1px solid ${netPowerColor.border}`,
+          color: netPowerColor.text
         }}>
           <div className="number-display">{netPower > 0 ? '+' : ''}{netPower}W</div>
           <div className="text-xs opacity-70">
