@@ -199,7 +199,7 @@ function App() {
         )}
 
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Kode+Mono:wght@400;500;600;700&display=swap');
           
           @keyframes shimmer {
             0% {

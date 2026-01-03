@@ -56,8 +56,9 @@ export function SystemDetailView({
   }, [])
 
   const getBatteryColor = () => {
-    if (batteryLevel > 50) return '#10b981'
-    if (batteryLevel > 20) return '#f59e0b'
+    if (batteryLevel > 25) return '#10b981'
+    if (batteryLevel > 15) return '#fbbf24'
+    if (batteryLevel > 10) return '#ff6b00'
     return '#ef4444'
   }
 
@@ -93,7 +94,8 @@ export function SystemDetailView({
           <div className="px-4 py-2 rounded-lg text-sm font-semibold" style={{
             background: 'rgba(59, 130, 246, 0.1)',
             border: '1px solid rgba(59, 130, 246, 0.3)',
-            color: '#60a5fa'
+            color: '#60a5fa',
+            fontFamily: '"Orbitron", -apple-system, sans-serif'
           }}>
             {time}
           </div>
@@ -109,7 +111,7 @@ export function SystemDetailView({
                   border: '1px solid rgba(16, 185, 129, 0.3)'
                 }}>
                   <div className="text-center">
-                    <div className="text-5xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
+                   <div className="text-5xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron"'}}>
                       {availableDays}
                     </div>
                     <div className="text-xs text-slate-400 font-semibold mt-3 uppercase tracking-wide">Days</div>
@@ -120,7 +122,7 @@ export function SystemDetailView({
                   border: '1px solid rgba(16, 185, 129, 0.3)'
                 }}>
                   <div className="text-center">
-                    <div className="text-5xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
+                   <div className="text-5xl font-bold text-green-400 leading-none" style={{fontFamily: '"Orbitron"'}}>
                       {availableHours}
                     </div>
                     <div className="text-xs text-slate-400 font-semibold mt-3 uppercase tracking-wide">Hrs</div>
@@ -146,18 +148,18 @@ export function SystemDetailView({
                     strokeWidth="20"
                     strokeLinecap="round"
                     strokeDasharray={`${dashOffset} 314`}
-                    style={{transition: 'stroke-dasharray 0.5s ease'}}
+                    style={{transition: 'stroke-dasharray 0.5s ease, stroke 0.4s ease'}}
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-end justify-center pb-2">
-                  <span className="text-5xl font-bold text-white" style={{fontFamily: '"Orbitron", monospace'}}>
-                    {batteryLevel}<span className="text-2xl">%</span>
-                  </span>
+                <div className="absolute inset-0 flex items-end justify-center">
+                   <span className="text-5xl font-bold text-white" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>
+                      {batteryLevel}<span className="text-xl">%</span>
+                    </span>
+                 </div>
+                <div className="absolute" style={{left: '-20px', bottom: '0px'}}>
+                  <span className="text-xs text-slate-400 font-semibold">0%</span>
                 </div>
-                <div className="absolute" style={{left: '-10px', bottom: '0px'}}>
-                  <span className="text-xs text-slate-400 font-semibold">10%</span>
-                </div>
-                <div className="absolute" style={{right: '-10px', bottom: '0px'}}>
+                <div className="absolute" style={{right: '-35px', bottom: '0px'}}>
                   <span className="text-xs text-slate-400 font-semibold">100%</span>
                 </div>
               </div>
@@ -210,7 +212,7 @@ export function SystemDetailView({
                           <span style={{fontSize: '24px'}}>🔋</span>
                         </div>
                         <div className="text-right">
-                          <div className="text-2xl font-bold text-white" style={{fontFamily: '"Orbitron", monospace'}}>{unit.level}</div>
+                          <div className="text-2xl font-bold text-white test-font-numbers">{unit.level}</div>
                           <div className="text-xs text-slate-400">{unit.current}</div>
                         </div>
                       </div>

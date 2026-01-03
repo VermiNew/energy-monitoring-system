@@ -32,10 +32,10 @@ export function OutputSection({
 
       <div className="mb-8 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-7xl font-bold text-white leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
+          <span className="text-7xl font-bold text-white leading-none test-font-numbers">
             {outputPower}
           </span>
-          <span className="text-3xl text-slate-500 mb-2">W</span>
+          <span className="text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
         </div>
       </div>
 
@@ -45,33 +45,33 @@ export function OutputSection({
           border: '1px solid rgba(59, 130, 246, 0.2)'
         }}>
           <div>
-            <div className="text-lg font-bold text-white mb-1">AC</div>
-            <div className="text-xs text-slate-500 font-medium">0W</div>
-          </div>
-          <div
-            onClick={onAcToggle}
-            className="w-14 h-8 rounded-full relative cursor-pointer transition-all border-2"
-            style={{
-              background: acEnabled 
-                ? 'linear-gradient(90deg, #3b82f6 0%, #2563eb 100%)'
-                : 'rgba(15, 23, 42, 0.8)',
-              borderColor: acEnabled ? '#60a5fa' : '#334155',
-              boxShadow: acEnabled ? '0 0 20px rgba(59, 130, 246, 0.5)' : 'none'
-            }}
-          >
-            <div className="w-6 h-6 bg-white rounded-full absolute top-0.5 transition-all shadow-md" style={{
-              left: acEnabled ? 'calc(100% - 26px)' : '2px'
-            }} />
-          </div>
-        </div>
+            <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>AC</div>
+            <div className="text-sm text-slate-500 font-medium test-font-numbers">0W</div>
+            </div>
+            <div
+             onClick={onAcToggle}
+             className="w-14 h-8 rounded-full relative cursor-pointer transition-all border-2"
+             style={{
+               background: acEnabled 
+                 ? 'linear-gradient(90deg, #3b82f6 0%, #2563eb 100%)'
+                 : 'rgba(15, 23, 42, 0.8)',
+               borderColor: acEnabled ? '#60a5fa' : '#334155',
+               boxShadow: acEnabled ? '0 0 20px rgba(59, 130, 246, 0.5)' : 'none'
+             }}
+            >
+             <div className="w-6 h-6 bg-white rounded-full absolute top-0.5 transition-all shadow-md" style={{
+               left: acEnabled ? 'calc(100% - 26px)' : '2px'
+             }} />
+            </div>
+            </div>
 
-        <div className="flex items-center justify-between rounded-xl p-4" style={{
-          background: 'rgba(15, 23, 42, 0.6)',
-          border: '1px solid rgba(59, 130, 246, 0.2)'
-        }}>
-          <div>
-            <div className="text-lg font-bold text-white mb-1">DC</div>
-            <div className="text-xs text-slate-500 font-medium">0W</div>
+            <div className="flex items-center justify-between rounded-xl p-4" style={{
+            background: 'rgba(15, 23, 42, 0.6)',
+            border: '1px solid rgba(59, 130, 246, 0.2)'
+            }}>
+            <div>
+             <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>DC</div>
+             <div className="text-sm text-slate-500 font-medium test-font-numbers">0W</div>
           </div>
           <div
             onClick={onDcToggle}

@@ -38,10 +38,10 @@ export function InputSection({
 
       <div className="mb-6 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-7xl font-bold text-white leading-none" style={{fontFamily: '"Orbitron", monospace'}}>
+          <span className="text-7xl font-bold text-white leading-none test-font-numbers">
             {inputPower}
           </span>
-          <span className="text-3xl text-slate-500 mb-2">W</span>
+          <span className="text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
         </div>
       </div>
 
@@ -69,9 +69,9 @@ export function InputSection({
                 style={{fontFamily: 'inherit'}}
               />
             ) : (
-              <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide">{source}</div>
-            )}
-            <div className="text-sm text-white font-bold mt-1">0W</div>
+               <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>{source}</div>
+             )}
+             <div className="text-base text-white font-bold mt-1 test-font-numbers">0W</div>
           </div>
         ))}
       </div>

@@ -42,7 +42,7 @@ export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0, o
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <div className="px-4 py-2 rounded-lg text-sm font-semibold" style={{
+        <div className="px-4 py-2 rounded-lg text-sm font-semibold test-font-numbers" style={{
           background: netPower === 0 
             ? 'rgba(100, 116, 139, 0.1)' 
             : netPower > 0 
@@ -57,19 +57,17 @@ export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0, o
             ? '#94a3b8' 
             : netPower > 0 
             ? '#10b981' 
-            : '#ef4444',
-          fontFamily: '"Orbitron", monospace'
+            : '#ef4444'
         }}>
           <div>{netPower > 0 ? '+' : ''}{netPower}W</div>
           <div className="text-xs opacity-70">
             {netPower === 0 ? 'Balanced' : netPower > 0 ? 'Charging' : 'Discharging'}
           </div>
         </div>
-        <div className="px-4 py-2 rounded-lg text-sm font-semibold" style={{
+        <div className="px-4 py-2 rounded-lg text-sm font-semibold test-font-numbers" style={{
           background: 'rgba(59, 130, 246, 0.1)',
           border: '1px solid rgba(59, 130, 246, 0.3)',
-          color: '#60a5fa',
-          fontFamily: '"Orbitron", monospace'
+          color: '#60a5fa'
         }}>
           {time}
         </div>

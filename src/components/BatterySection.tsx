@@ -8,8 +8,9 @@ interface BatterySectionProps {
 export function BatterySection({ batteryLevel, availableDays, availableHours, onShowSystem }: BatterySectionProps) {
 
   const getBatteryColor = () => {
-    if (batteryLevel > 50) return '#10b981'
-    if (batteryLevel > 20) return '#f59e0b'
+    if (batteryLevel > 25) return '#10b981'
+    if (batteryLevel > 15) return '#fbbf24'
+    if (batteryLevel > 10) return '#ff6b00'
     return '#ef4444'
   }
 
@@ -42,7 +43,7 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
         <div className="flex items-baseline gap-2">
           <span className="text-5xl font-bold leading-none" style={{
             color: batteryLevel === 0 ? '#ef4444' : '#10b981',
-            fontFamily: '"Orbitron", monospace'
+            fontFamily: '"Orbitron"'
           }}>
             {availableDays}
           </span>
@@ -51,7 +52,7 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
           }}>D</span>
           <span className="text-5xl font-bold leading-none" style={{
             color: batteryLevel === 0 ? '#ef4444' : '#10b981',
-            fontFamily: '"Orbitron", monospace'
+            fontFamily: '"Orbitron"'
           }}>
             {availableHours}
           </span>
@@ -64,7 +65,7 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
       <div className="relative z-10">
         <div className="flex justify-between items-center mb-3">
           <span className="text-xs text-slate-500 font-medium">Battery Level</span>
-          <span className="text-3xl font-bold text-white" style={{fontFamily: '"Orbitron", monospace'}}>
+          <span className="text-3xl font-bold text-white" style={{fontFamily: '"Orbitron"'}}>
             {batteryLevel}%
           </span>
         </div>
@@ -73,18 +74,23 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
           background: 'rgba(15, 23, 42, 0.6)',
           border: '1px solid rgba(59, 130, 246, 0.2)'
         }}>
-          <div className="w-full relative transition-all duration-500 overflow-hidden" style={{
+          <div className="w-full relative overflow-hidden" style={{
             height: `${batteryLevel}%`,
-            background: batteryLevel > 50 
+            background: batteryLevel > 25 
               ? 'linear-gradient(0deg, #10b981 0%, #34d399 100%)'
-              : batteryLevel > 20
-              ? 'linear-gradient(0deg, #f59e0b 0%, #fbbf24 100%)'
+              : batteryLevel > 15
+              ? 'linear-gradient(0deg, #fbbf24 0%, #fcd34d 100%)'
+              : batteryLevel > 10
+              ? 'linear-gradient(0deg, #ff6b00 0%, #ff8a33 100%)'
               : 'linear-gradient(0deg, #ef4444 0%, #f87171 100%)',
-            boxShadow: batteryLevel > 50 
+            boxShadow: batteryLevel > 25 
               ? '0 0 20px rgba(16, 185, 129, 0.6)'
-              : batteryLevel > 20
-              ? '0 0 20px rgba(245, 158, 11, 0.6)'
-              : '0 0 20px rgba(239, 68, 68, 0.6)'
+              : batteryLevel > 15
+              ? '0 0 20px rgba(251, 191, 36, 0.6)'
+              : batteryLevel > 10
+              ? '0 0 20px rgba(255, 107, 0, 0.6)'
+              : '0 0 20px rgba(239, 68, 68, 0.6)',
+            transition: 'background 0.4s ease, box-shadow 0.4s ease, height 0.5s ease'
           }}>
             <div className="absolute inset-0 shimmer-animation" style={{
               background: 'linear-gradient(0deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
