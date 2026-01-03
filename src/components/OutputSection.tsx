@@ -32,7 +32,7 @@ export function OutputSection({
 
       <div className="mb-8 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-7xl font-bold text-white leading-none test-font-numbers">
+          <span className="text-7xl font-bold text-white leading-none test-font-numbers number-display">
             {outputPower}
           </span>
           <span className="text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
@@ -46,7 +46,7 @@ export function OutputSection({
         }}>
           <div>
             <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>AC</div>
-            <div className="text-sm text-slate-500 font-medium test-font-numbers">0W</div>
+            <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">0W</div>
             </div>
             <div
              onClick={onAcToggle}
@@ -71,7 +71,7 @@ export function OutputSection({
             }}>
             <div>
              <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>DC</div>
-             <div className="text-sm text-slate-500 font-medium test-font-numbers">0W</div>
+             <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">0W</div>
           </div>
           <div
             onClick={onDcToggle}

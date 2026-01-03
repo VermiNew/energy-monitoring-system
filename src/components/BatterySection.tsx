@@ -1,3 +1,5 @@
+import { ArrowRight } from 'lucide-react'
+
 interface BatterySectionProps {
   batteryLevel: number
   availableDays: number
@@ -34,25 +36,23 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
             background: '#10b981',
             boxShadow: '0 0 12px #10b981'
           }} />
-          <span className="text-slate-400 text-lg">→</span>
+          <ArrowRight size={18} className="text-slate-400" />
         </div>
       </div>
 
       <div className="mb-6 relative z-10">
         <p className="text-xs text-slate-500 font-medium mb-2">Available Time</p>
         <div className="flex items-baseline gap-2">
-          <span className="text-5xl font-bold leading-none" style={{
-            color: batteryLevel === 0 ? '#ef4444' : '#10b981',
-            fontFamily: '"Orbitron"'
+          <span className="text-5xl font-bold leading-none number-display" style={{
+            color: batteryLevel === 0 ? '#ef4444' : '#10b981'
           }}>
             {availableDays}
           </span>
           <span className="text-xl font-semibold" style={{
             color: batteryLevel === 0 ? '#ef4444' : '#10b981'
           }}>D</span>
-          <span className="text-5xl font-bold leading-none" style={{
-            color: batteryLevel === 0 ? '#ef4444' : '#10b981',
-            fontFamily: '"Orbitron"'
+          <span className="text-5xl font-bold leading-none number-display" style={{
+            color: batteryLevel === 0 ? '#ef4444' : '#10b981'
           }}>
             {availableHours}
           </span>
@@ -65,7 +65,7 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
       <div className="relative z-10">
         <div className="flex justify-between items-center mb-3">
           <span className="text-xs text-slate-500 font-medium">Battery Level</span>
-          <span className="text-3xl font-bold text-white" style={{fontFamily: '"Orbitron"'}}>
+          <span className="text-3xl font-bold text-white number-display">
             {batteryLevel}%
           </span>
         </div>

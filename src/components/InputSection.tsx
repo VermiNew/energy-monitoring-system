@@ -1,3 +1,5 @@
+import { Lightbulb } from 'lucide-react'
+
 interface InputSectionProps {
   inputPower: number
   sourceNames: string[]
@@ -38,7 +40,7 @@ export function InputSection({
 
       <div className="mb-6 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-7xl font-bold text-white leading-none test-font-numbers">
+          <span className="text-7xl font-bold text-white leading-none number-display">
             {inputPower}
           </span>
           <span className="text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
@@ -75,8 +77,9 @@ export function InputSection({
           </div>
         ))}
       </div>
-      <div className="text-xs text-slate-500 text-center mt-2 relative z-10">
-        💡 Double click to rename sources
+      <div className="text-xs text-slate-500 text-center mt-2 relative z-10 flex items-center justify-center gap-2">
+        <Lightbulb size={14} />
+        <span>Double click to rename sources</span>
       </div>
     </section>
   )
