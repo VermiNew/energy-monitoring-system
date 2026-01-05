@@ -40,35 +40,35 @@ export function InputSection({
       </div>
 
       <div className="grid grid-cols-4 gap-3 relative z-10">
-        {sourceNames.map((source, index) => (
-          <div 
-            key={index}
-            onDoubleClick={() => onDoubleClick(index)}
-            className="rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-blue-500/20 hover:border-blue-500/50" 
-            style={{
-              background: 'rgba(15, 23, 42, 0.6)',
-              border: '1px solid rgba(59, 130, 246, 0.2)'
-            }}
-            title="Double click to edit"
-          >
-            {editingIndex === index ? (
-              <input
-                type="text"
-                value={editValue}
-                onChange={(e) => onNameChange(e.target.value)}
-                onBlur={() => onNameSave(index)}
-                onKeyDown={(e) => onKeyDown(e, index)}
-                autoFocus
-                className="w-full bg-transparent text-xs text-blue-400 font-semibold uppercase tracking-wide text-center outline-none border-b border-blue-400"
-                style={{fontFamily: 'inherit'}}
-              />
-            ) : (
-               <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>{source}</div>
-             )}
-             <div className="text-base text-white font-bold mt-1 test-font-numbers">0W</div>
-          </div>
-        ))}
-      </div>
+         {sourceNames.map((source, index) => (
+           <div 
+             key={source.id}
+             onDoubleClick={() => onDoubleClick(index)}
+             className="rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-blue-500/20 hover:border-blue-500/50" 
+             style={{
+               background: 'rgba(15, 23, 42, 0.6)',
+               border: '1px solid rgba(59, 130, 246, 0.2)'
+             }}
+             title="Double click to edit"
+           >
+             {editingIndex === index ? (
+               <input
+                 type="text"
+                 value={editValue}
+                 onChange={(e) => onNameChange(e.target.value)}
+                 onBlur={() => onNameSave(index)}
+                 onKeyDown={(e) => onKeyDown(e, index)}
+                 autoFocus
+                 className="w-full bg-transparent text-xs text-blue-400 font-semibold uppercase tracking-wide text-center outline-none border-b border-blue-400"
+                 style={{fontFamily: 'inherit'}}
+               />
+             ) : (
+                <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>{source.name}</div>
+              )}
+              <div className="text-base text-white font-bold mt-1 test-font-numbers">0W</div>
+           </div>
+         ))}
+       </div>
       <div className="text-xs text-slate-500 text-center mt-2 relative z-10 flex items-center justify-center gap-2">
         <Lightbulb size={14} />
         <span>Double click to rename sources</span>

@@ -58,11 +58,19 @@ export interface BatterySectionProps {
 }
 
 /**
+ * Power source with id and name
+ */
+export interface PowerSource {
+  id: number
+  name: string
+}
+
+/**
  * Power input sources component props with inline editing
  */
 export interface InputSectionProps {
   inputPower: number
-  sourceNames: string[]
+  sourceNames: PowerSource[]
   editingIndex: number | null
   editValue: string
   onDoubleClick: (index: number) => void

@@ -4,7 +4,7 @@ import type { HeaderSectionProps } from '../types'
 import { setupTimeInterval } from '../utils/time'
 import { getNetPowerColor } from '../utils/colors'
 
-export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0 }: HeaderSectionProps) {
+export function HeaderSection({ netPower = 0 }: HeaderSectionProps) {
   const [time, setTime] = useState<string>('')
   const netPowerColor = getNetPowerColor(netPower)
 

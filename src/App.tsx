@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { HeaderSection } from './components/HeaderSection'
 import { BatterySection } from './components/BatterySection'
 import { InputSection } from './components/InputSection'
 import { OutputSection } from './components/OutputSection'
-import { StorageSection } from './components/StorageSection'
 import { SystemDetailView } from './components/SystemDetailView'
 import type { StorageUnit } from './types'
 import { calculateNetPower } from './utils/calculations'
 import { isValidSourceName, validateSourceName } from './utils/validators'
+import { fetchBattery, fetchPower, fetchSources, fetchStorage, fetchOutput, updateSource } from './api/client'
 
 function App() {
   const [showSystemDetail, setShowSystemDetail] = useState(false)
@@ -18,10 +18,39 @@ function App() {
   const [outputPower, setOutputPower] = useState(0)
   const [acEnabled, setAcEnabled] = useState(false)
   const [dcEnabled, setDcEnabled] = useState(false)
-  const [sourceNames, setSourceNames] = useState(['Solar', 'Grid', 'Car', 'Wind'])
+  const [sourceNames, setSourceNames] = useState<Array<{ id: number; name: string }>>([])
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editValue, setEditValue] = useState('')
   const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([])
+
+  // Fetch data on mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [battery, power, sources, storage, output] = await Promise.all([
+          fetchBattery(),
+          fetchPower(),
+          fetchSources(),
+          fetchStorage(),
+          fetchOutput(),
+        ])
+        
+        setBatteryLevel(battery.level)
+        setAvailableDays(battery.availableDays)
+        setAvailableHours(battery.availableHours)
+        setInputPower(power.inputPower)
+        setOutputPower(power.outputPower)
+        setSourceNames(sources)
+        setStorageUnits(storage)
+        setAcEnabled(output.acEnabled)
+        setDcEnabled(output.dcEnabled)
+      } catch (error) {
+        console.error('Failed to load initial data:', error)
+      }
+    }
+
+    loadData()
+  }, [])
 
   // Check for ?demo parameter in URL
   const showDemo = typeof window !== 'undefined' && window.location.search.includes('demo')
@@ -29,18 +58,9 @@ function App() {
   // Calculate net power
   const netPower = calculateNetPower(inputPower, outputPower)
 
-  // TODO: Integrate with server
-  // Replace the useState calls above with API calls when server is ready
-  // Example structure for storage units from API:
-  // const fetchStorageUnits = async () => {
-  //   const response = await fetch('/api/storage')
-  //   const data = await response.json()
-  //   setStorageUnits(data)
-  // }
-
   const handleDoubleClick = (index: number): void => {
     setEditingIndex(index)
-    setEditValue(sourceNames[index])
+    setEditValue(sourceNames[index].name)
   }
 
   const handleNameChange = (value: string): void => {
@@ -54,14 +74,17 @@ function App() {
     }
   }
 
-  const handleNameSave = (index: number): void => {
+  const handleNameSave = async (index: number): Promise<void> => {
     try {
       if (!Number.isInteger(index) || index < 0) {
         throw new Error('Invalid source index')
       }
       if (isValidSourceName(editValue)) {
+        const source = sourceNames[index]
+        const cleanName = validateSourceName(editValue)
+        await updateSource(source.id, cleanName)
         const newNames = [...sourceNames]
-        newNames[index] = validateSourceName(editValue)
+        newNames[index] = { ...source, name: cleanName }
         setSourceNames(newNames)
       }
     } catch (error) {
