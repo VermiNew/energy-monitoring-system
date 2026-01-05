@@ -14,7 +14,7 @@ export function InputSection({
 }: InputSectionProps) {
   const statusColor = getStatusColor(inputPower > 0)
   return (
-    <section className="rounded-2xl p-6 relative overflow-hidden" style={{
+    <section className="rounded-xl md:rounded-2xl p-4 md:p-6 relative overflow-hidden" style={{
       background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
       border: '1px solid rgba(59, 130, 246, 0.3)'
     }}>
@@ -30,16 +30,16 @@ export function InputSection({
          }} />
        </div>
 
-      <div className="mb-6 relative z-10">
+      <div className="mb-4 md:mb-6 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-7xl font-bold text-white leading-none number-display">
+          <span className="text-5xl md:text-7xl font-bold text-white leading-none number-display">
             {inputPower}
           </span>
-          <span className="text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
+          <span className="text-xl md:text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 relative z-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 relative z-10">
          {sourceNames.map((source, index) => (
            <div 
              key={source.id}

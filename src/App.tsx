@@ -136,7 +136,7 @@ function App() {
       background: 'linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%)',
       fontFamily: 'var(--font-interface)'
     }}>
-      <div className="w-full max-w-7xl rounded-3xl p-8 shadow-2xl" style={{
+      <div className="w-full max-w-7xl rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl" style={{
         background: 'linear-gradient(145deg, #1e293b 0%, #0f172a 100%)',
         border: '1px solid rgba(59, 130, 246, 0.2)'
       }}>
@@ -147,8 +147,8 @@ function App() {
         />
 
         {/* Main Grid */}
-        <main className="mt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <main className="mt-4 md:mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
             <BatterySection 
               batteryLevel={batteryLevel}
               availableDays={availableDays}

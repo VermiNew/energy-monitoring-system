@@ -10,7 +10,7 @@ export function OutputSection({
 }: OutputSectionProps) {
   const statusColor = getStatusColor(acEnabled || dcEnabled)
   return (
-    <section className="rounded-2xl p-6 relative overflow-hidden" style={{
+    <section className="rounded-xl md:rounded-2xl p-4 md:p-6 relative overflow-hidden" style={{
       background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
       border: '1px solid rgba(59, 130, 246, 0.3)'
     }}>
@@ -26,12 +26,12 @@ export function OutputSection({
          }} />
        </div>
 
-      <div className="mb-8 relative z-10">
+      <div className="mb-4 md:mb-8 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-7xl font-bold text-white leading-none test-font-numbers number-display">
+          <span className="text-5xl md:text-7xl font-bold text-white leading-none test-font-numbers number-display">
             {outputPower}
           </span>
-          <span className="text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
+          <span className="text-xl md:text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
         </div>
       </div>
 

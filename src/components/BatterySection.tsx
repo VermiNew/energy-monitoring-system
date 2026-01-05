@@ -9,7 +9,7 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
   return (
     <section 
       onClick={onShowSystem}
-      className="rounded-2xl p-6 relative overflow-hidden cursor-pointer transition-all hover:border-blue-400"
+      className="rounded-xl md:rounded-2xl p-4 md:p-6 relative overflow-hidden cursor-pointer transition-all hover:border-blue-400"
       style={{
         background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
         border: '1px solid rgba(59, 130, 246, 0.3)'
@@ -30,23 +30,23 @@ export function BatterySection({ batteryLevel, availableDays, availableHours, on
         </div>
       </div>
 
-      <div className="mb-6 relative z-10">
+      <div className="mb-4 md:mb-6 relative z-10">
         <p className="text-xs text-slate-500 font-medium mb-2">Available Time</p>
-        <div className="flex items-baseline gap-2">
-          <span className="text-5xl font-bold leading-none number-display" style={{
+        <div className="flex items-baseline gap-1 md:gap-2">
+          <span className="text-3xl md:text-5xl font-bold leading-none number-display" style={{
             color: batteryLevel === 0 ? '#ef4444' : '#10b981'
           }}>
             {availableDays}
           </span>
-          <span className="text-xl font-semibold" style={{
+          <span className="text-lg md:text-xl font-semibold" style={{
             color: batteryLevel === 0 ? '#ef4444' : '#10b981'
           }}>D</span>
-          <span className="text-5xl font-bold leading-none number-display" style={{
+          <span className="text-3xl md:text-5xl font-bold leading-none number-display" style={{
             color: batteryLevel === 0 ? '#ef4444' : '#10b981'
           }}>
             {availableHours}
           </span>
-          <span className="text-xl font-semibold" style={{
+          <span className="text-lg md:text-xl font-semibold" style={{
             color: batteryLevel === 0 ? '#ef4444' : '#10b981'
           }}>H</span>
         </div>
