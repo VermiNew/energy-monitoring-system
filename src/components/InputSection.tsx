@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { Lightbulb } from 'lucide-react'
 import type { InputSectionProps } from '../types'
 import { getStatusColor } from '../utils/colors'
@@ -13,6 +14,19 @@ export function InputSection({
   onKeyDown
 }: InputSectionProps) {
   const statusColor = getStatusColor(inputPower > 0)
+  const lastTapRef = useRef<{ index: number; time: number } | null>(null)
+
+  const handleTap = (index: number) => {
+    const now = Date.now()
+    const lastTap = lastTapRef.current
+
+    if (lastTap && lastTap.index === index && now - lastTap.time < 300) {
+      onDoubleClick(index)
+      lastTapRef.current = null
+    } else {
+      lastTapRef.current = { index, time: now }
+    }
+  }
   return (
     <section className="rounded-xl md:rounded-2xl p-4 md:p-6 relative overflow-hidden" style={{
       background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
@@ -44,12 +58,13 @@ export function InputSection({
            <div 
              key={source.id}
              onDoubleClick={() => onDoubleClick(index)}
+             onTouchEnd={() => handleTap(index)}
              className="rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-blue-500/20 hover:border-blue-500/50" 
              style={{
                background: 'rgba(15, 23, 42, 0.6)',
                border: '1px solid rgba(59, 130, 246, 0.2)'
              }}
-             title="Double click to edit"
+             title="Double click or double tap to edit"
            >
              {editingIndex === index ? (
                <input
