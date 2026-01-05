@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Zap, ArrowRight } from 'lucide-react'
+import { Zap } from 'lucide-react'
 import type { HeaderSectionProps } from '../types'
 import { setupTimeInterval } from '../utils/time'
 import { getNetPowerColor } from '../utils/colors'
@@ -29,13 +29,7 @@ export function HeaderSection({ inputPower = 0, outputPower = 0, netPower = 0 }:
           <p className="text-xs text-slate-500 font-medium m-0">Energy Management System</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full" style={{
-          background: '#10b981',
-          boxShadow: '0 0 12px #10b981'
-        }} />
-        <ArrowRight size={18} color="#94a3b8" />
-      </div>
+
       <div className="flex items-center gap-4">
         <div className="px-4 py-2 rounded-lg text-sm font-semibold" style={{
           background: netPowerColor.bg,
