@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Nunito+Sans:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
+@theme {
+  --font-orbitron: "Orbitron", sans-serif;
+  --font-numbers: "Nunito Sans", sans-serif;
+}
+
 :root {
-  --font-interface: 'Orbitron', -apple-system, sans-serif;
-  --font-numbers: 'Nunito Sans', sans-serif;
+  --font-interface: var(--font-orbitron);
+  --font-numbers: var(--font-numbers);
 }
 
 .test-font-numbers {
