@@ -134,7 +134,7 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center p-5" style={{
       background: 'linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%)',
-      fontFamily: '"Orbitron", -apple-system, sans-serif'
+      fontFamily: 'var(--font-interface)'
     }}>
       <div className="w-full max-w-7xl rounded-3xl p-8 shadow-2xl" style={{
         background: 'linear-gradient(145deg, #1e293b 0%, #0f172a 100%)',

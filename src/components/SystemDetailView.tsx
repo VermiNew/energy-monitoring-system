@@ -75,7 +75,7 @@ export function SystemDetailView({
                   border: '1px solid rgba(16, 185, 129, 0.3)'
                 }}>
                   <div className="text-center">
-                   <div className="text-5xl font-bold text-green-400 leading-none number-display" style={{fontFamily: '"Orbitron"'}}>
+                   <div className="text-5xl font-bold text-green-400 leading-none number-display">
                       {availableDays}
                     </div>
                     <div className="text-xs text-slate-400 font-semibold mt-3 uppercase tracking-wide">Days</div>
@@ -86,7 +86,7 @@ export function SystemDetailView({
                   border: '1px solid rgba(16, 185, 129, 0.3)'
                 }}>
                   <div className="text-center">
-                   <div className="text-5xl font-bold text-green-400 leading-none number-display" style={{fontFamily: '"Orbitron"'}}>
+                   <div className="text-5xl font-bold text-green-400 leading-none number-display">
                       {availableHours}
                     </div>
                     <div className="text-xs text-slate-400 font-semibold mt-3 uppercase tracking-wide">Hrs</div>
@@ -116,10 +116,10 @@ export function SystemDetailView({
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-end justify-center">
-                   <span className="text-5xl font-bold text-white number-display" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>
-                      {batteryLevel}<span className="text-xl">%</span>
-                    </span>
-                 </div>
+                    <span className="text-5xl font-bold text-white number-display">
+                       {batteryLevel}<span className="text-xl">%</span>
+                     </span>
+                  </div>
                 <div className="absolute" style={{left: '-20px', bottom: '0px'}}>
                   <span className="text-xs text-slate-400 font-semibold">0%</span>
                 </div>
