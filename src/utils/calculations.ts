@@ -9,7 +9,15 @@ const SVG_CIRCLE_CIRCUMFERENCE = 314
  * @returns Net power (positive = charging, negative = discharging)
  */
 export const calculateNetPower = (inputPower: number, outputPower: number): number => {
-  return inputPower - outputPower
+  try {
+    if (!Number.isFinite(inputPower) || !Number.isFinite(outputPower)) {
+      throw new Error('Input and output power must be finite numbers')
+    }
+    return inputPower - outputPower
+  } catch (error) {
+    console.error('Error calculating net power:', error)
+    return 0
+  }
 }
 
 /**

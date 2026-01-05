@@ -4,9 +4,18 @@ const MIN_STRING_LENGTH = 1
  * Validate and clean source name input
  * @param value Input string to validate
  * @returns Trimmed string without whitespace
+ * @throws Error if input is not a string
  */
 export const validateSourceName = (value: string): string => {
-  return value.trim()
+  try {
+    if (typeof value !== 'string') {
+      throw new TypeError('Source name must be a string')
+    }
+    return value.trim()
+  } catch (error) {
+    console.error('Error validating source name:', error)
+    throw error
+  }
 }
 
 /**
@@ -15,7 +24,15 @@ export const validateSourceName = (value: string): string => {
  * @returns True if name is non-empty after trimming
  */
 export const isValidSourceName = (value: string): boolean => {
-  return validateSourceName(value).length >= MIN_STRING_LENGTH
+  try {
+    if (typeof value !== 'string') {
+      return false
+    }
+    return validateSourceName(value).length >= MIN_STRING_LENGTH
+  } catch (error) {
+    console.error('Error checking source name validity:', error)
+    return false
+  }
 }
 
 /**

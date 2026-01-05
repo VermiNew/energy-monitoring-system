@@ -44,25 +44,47 @@ function App() {
   }
 
   const handleNameChange = (value: string): void => {
-    setEditValue(value)
+    try {
+      if (typeof value !== 'string') {
+        throw new TypeError('Name change value must be a string')
+      }
+      setEditValue(value)
+    } catch (error) {
+      console.error('Error handling name change:', error)
+    }
   }
 
   const handleNameSave = (index: number): void => {
-    if (isValidSourceName(editValue)) {
-      const newNames = [...sourceNames]
-      newNames[index] = validateSourceName(editValue)
-      setSourceNames(newNames)
+    try {
+      if (!Number.isInteger(index) || index < 0) {
+        throw new Error('Invalid source index')
+      }
+      if (isValidSourceName(editValue)) {
+        const newNames = [...sourceNames]
+        newNames[index] = validateSourceName(editValue)
+        setSourceNames(newNames)
+      }
+    } catch (error) {
+      console.error('Error saving source name:', error)
+    } finally {
+      setEditingIndex(null)
+      setEditValue('')
     }
-    setEditingIndex(null)
-    setEditValue('')
   }
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number): void => {
-    if (e.key === 'Enter') {
-      handleNameSave(index)
-    } else if (e.key === 'Escape') {
-      setEditingIndex(null)
-      setEditValue('')
+    try {
+      if (!e) {
+        throw new Error('Keyboard event is missing')
+      }
+      if (e.key === 'Enter') {
+        handleNameSave(index)
+      } else if (e.key === 'Escape') {
+        setEditingIndex(null)
+        setEditValue('')
+      }
+    } catch (error) {
+      console.error('Error handling keyboard input:', error)
     }
   }
 
