@@ -1,9 +1,8 @@
 import { ArrowRight } from 'lucide-react'
 import type { BatterySectionProps } from '../types'
-import { getBatteryColor, getBatteryGradient, getBatteryShadow } from '../utils/colors'
+import { getBatteryGradient, getBatteryShadow } from '../utils/colors'
 
 export function BatterySection({ batteryLevel, availableDays, availableHours, onShowSystem }: BatterySectionProps) {
-  const batteryColorValue = getBatteryColor(batteryLevel)
   const batteryGradient = getBatteryGradient(batteryLevel)
   const batteryShadow = getBatteryShadow(batteryLevel)
 
