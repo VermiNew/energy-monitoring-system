@@ -58,11 +58,13 @@ export interface BatterySectionProps {
 }
 
 /**
- * Power source with id and name
+ * Power source with id, name, connection status and power
  */
 export interface PowerSource {
   id: number
   name: string
+  status: boolean
+  power: number
 }
 
 /**
@@ -86,6 +88,8 @@ export interface OutputSectionProps {
   outputPower: number
   acEnabled: boolean
   dcEnabled: boolean
+  acPower: number
+  dcPower: number
   onAcToggle: () => void
   onDcToggle: () => void
 }
