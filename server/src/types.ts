@@ -33,6 +33,8 @@ export interface EnergyMetrics {
 export interface OutputStatus {
   acEnabled: boolean
   dcEnabled: boolean
+  acPower: number
+  dcPower: number
 }
 
 /**
@@ -41,4 +43,6 @@ export interface OutputStatus {
 export interface PowerSource {
   id: number
   name: string
+  status: boolean
+  power: number
 }
