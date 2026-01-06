@@ -3,18 +3,21 @@ import cors from '@fastify/cors'
 import type { BatteryStatus, EnergyMetrics, OutputStatus, StorageUnit, PowerSource } from './types'
 
 const app = Fastify({
-  logger: true,
+  logger: false,
 })
 
 app.register(cors, {
   origin: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 })
 
 // Mock data
 let batteryData: BatteryStatus = {
-  level: 29,
-  availableDays: 99,
-  availableHours: 23,
+  level: 0,
+  availableDays: 0,
+  availableHours: 0,
 }
 
 let powerData: EnergyMetrics = {
@@ -25,13 +28,15 @@ let powerData: EnergyMetrics = {
 let outputStatus: OutputStatus = {
   acEnabled: false,
   dcEnabled: false,
+  acPower: 0,
+  dcPower: 0,
 }
 
 let sources: PowerSource[] = [
-  { id: 1, name: 'Solar' },
-  { id: 2, name: 'Grid' },
-  { id: 3, name: 'Car' },
-  { id: 4, name: 'Wind' },
+  { id: 1, name: 'Solar', status: false, power: 0 },
+  { id: 2, name: 'Grid', status: false, power: 0 },
+  { id: 3, name: 'Generator', status: false, power: 0 },
+  { id: 4, name: 'Wind', status: false, power: 0 },
 ]
 
 let storage: StorageUnit[] = [
@@ -80,14 +85,22 @@ app.get('/api/sources', async () => {
   return sources
 })
 
-app.put<{ Params: { id: string }; Body: { name: string } }>('/api/sources/:id', async (request, reply) => {
-  const sourceId = parseInt(request.params.id)
-  const source = sources.find((s) => s.id === sourceId)
+app.put<{ Body: { node: number; status?: boolean; name?: string; power?: number } }>('/api/sources', async (request, reply) => {
+  const source = sources[request.body.node]
   if (!source) {
     reply.status(404).send({ error: 'Source not found' })
     return
   }
-  source.name = request.body.name
+  if (request.body.status !== undefined) {
+    source.status = request.body.status
+  }
+  if (request.body.name !== undefined) {
+    source.name = request.body.name
+  }
+  if (request.body.power !== undefined && source.status) {
+    source.power = request.body.power
+    powerData.inputPower = sources.reduce((sum, s) => sum + (s.status ? s.power : 0), 0)
+  }
   reply.send(source)
 })
 
@@ -101,6 +114,7 @@ app.get('/api/output', async () => {
 
 app.put<{ Body: Partial<OutputStatus> }>('/api/output', async (request, reply) => {
   outputStatus = { ...outputStatus, ...request.body }
+  powerData.outputPower = outputStatus.acPower + outputStatus.dcPower
   reply.send(outputStatus)
 })
 
