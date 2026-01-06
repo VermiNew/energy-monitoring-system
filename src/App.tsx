@@ -56,8 +56,8 @@ function App() {
 
     loadData()
 
-    // Poll for updates every 100ms
-    const interval = setInterval(loadData, 100)
+    // Poll for updates every 500ms
+    const interval = setInterval(loadData, 500)
 
     return () => clearInterval(interval)
   }, [])
