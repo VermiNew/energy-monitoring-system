@@ -8,23 +8,17 @@ import { useState, useEffect } from 'react'
  */
 export function useEasing(targetValue: number, duration: number = 300): number {
   const [displayValue, setDisplayValue] = useState(targetValue)
-  const [animationStartTime, setAnimationStartTime] = useState<number | null>(null)
-  const [startValue, setStartValue] = useState(targetValue)
 
   useEffect(() => {
     if (displayValue === targetValue) {
       return
     }
 
-    setAnimationStartTime(Date.now())
-    setStartValue(displayValue)
-  }, [targetValue, displayValue])
+    const startTime = Date.now()
+    const startValue = displayValue
 
-  useEffect(() => {
-    if (animationStartTime === null) return
-
-    const animationFrame = requestAnimationFrame(() => {
-      const elapsed = Date.now() - animationStartTime
+    const animate = () => {
+      const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / duration, 1)
 
       // Easing function (easeInOutCubic)
@@ -34,16 +28,15 @@ export function useEasing(targetValue: number, duration: number = 300): number {
 
       const newValue = startValue + (targetValue - startValue) * easeProgress
 
-      if (progress === 1) {
-        setDisplayValue(targetValue)
-        setAnimationStartTime(null)
-      } else {
-        setDisplayValue(newValue)
+      setDisplayValue(Math.round(newValue))
+
+      if (progress < 1) {
+        requestAnimationFrame(animate)
       }
-    })
+    }
 
-    return () => cancelAnimationFrame(animationFrame)
-  }, [animationStartTime, duration, startValue, targetValue])
+    requestAnimationFrame(animate)
+  }, [targetValue, duration])
 
-  return Math.round(displayValue)
+  return displayValue
 }
