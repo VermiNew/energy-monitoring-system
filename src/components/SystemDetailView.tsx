@@ -4,6 +4,7 @@ import type { SystemDetailViewProps } from '../types'
 import { setupTimeInterval } from '../utils/time'
 import { getBatteryColor } from '../utils/colors'
 import { calculateBatteryDashOffset } from '../utils/calculations'
+import { updateBattery, updatePower } from '../api/client'
 
 export function SystemDetailView({
   onBack,
@@ -207,60 +208,59 @@ export function SystemDetailView({
                   Battery Level: {batteryLevel}%
                 </label>
                 <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={batteryLevel}
-                  onChange={(e) => {
-                    const level = parseInt(e.target.value)
-                    setBatteryLevel(level)
-                    if (level === 0) {
-                      setAvailableDays(0)
-                      setAvailableHours(0)
-                    } else {
-                      setAvailableDays(99)
-                      setAvailableHours(23)
-                    }
-                  }}
-                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${batteryLevel}%, #1e293b ${batteryLevel}%, #1e293b 100%)`
-                  }}
-                />
+                   type="range"
+                   min="0"
+                   max="100"
+                   value={batteryLevel}
+                   onChange={(e) => {
+                     const level = parseInt(e.target.value)
+                     updateBattery({ level }).catch(err => console.error('Failed to update battery:', err))
+                   }}
+                   className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                   style={{
+                     background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${batteryLevel}%, #1e293b ${batteryLevel}%, #1e293b 100%)`
+                   }}
+                 />
               </div>
               <div>
                 <label className="block text-xs text-slate-500 mb-2 font-semibold">
                   Input Power: {inputPower}W
                 </label>
                 <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  step="1"
-                  value={inputPower}
-                  onChange={(e) => setInputPower(parseInt(e.target.value))}
-                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, #10b981 0%, #10b981 ${inputPower/10}%, #1e293b ${inputPower/10}%, #1e293b 100%)`
-                  }}
-                />
+                   type="range"
+                   min="0"
+                   max="1000"
+                   step="1"
+                   value={inputPower}
+                   onChange={(e) => {
+                     const power = parseInt(e.target.value)
+                     updatePower({ inputPower: power }).catch(err => console.error('Failed to update power:', err))
+                   }}
+                   className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                   style={{
+                     background: `linear-gradient(to right, #10b981 0%, #10b981 ${inputPower/10}%, #1e293b ${inputPower/10}%, #1e293b 100%)`
+                   }}
+                 />
               </div>
               <div>
                 <label className="block text-xs text-slate-500 mb-2 font-semibold">
                   Output Power: {outputPower}W
                 </label>
                 <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  step="1"
-                  value={outputPower}
-                  onChange={(e) => setOutputPower(parseInt(e.target.value))}
-                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${outputPower/10}%, #1e293b ${outputPower/10}%, #1e293b 100%)`
-                  }}
-                />
+                   type="range"
+                   min="0"
+                   max="1000"
+                   step="1"
+                   value={outputPower}
+                   onChange={(e) => {
+                     const power = parseInt(e.target.value)
+                     updatePower({ outputPower: power }).catch(err => console.error('Failed to update power:', err))
+                   }}
+                   className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                   style={{
+                     background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${outputPower/10}%, #1e293b ${outputPower/10}%, #1e293b 100%)`
+                   }}
+                 />
               </div>
             </div>
           </div>
