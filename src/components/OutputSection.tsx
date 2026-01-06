@@ -5,6 +5,8 @@ export function OutputSection({
   outputPower,
   acEnabled,
   dcEnabled,
+  acPower,
+  dcPower,
   onAcToggle,
   onDcToggle
 }: OutputSectionProps) {
@@ -42,7 +44,7 @@ export function OutputSection({
         }}>
           <div>
             <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>AC</div>
-            <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">0W</div>
+            <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">{acPower}W</div>
             </div>
             <div
              onClick={onAcToggle}
@@ -66,9 +68,9 @@ export function OutputSection({
             border: '1px solid rgba(59, 130, 246, 0.2)'
             }}>
             <div>
-             <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>DC</div>
-             <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">0W</div>
-          </div>
+              <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>DC</div>
+              <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">{dcPower}W</div>
+            </div>
           <div
             onClick={onDcToggle}
             className="w-14 h-8 rounded-full relative cursor-pointer transition-all border-2"

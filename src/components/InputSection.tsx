@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Lightbulb } from 'lucide-react'
+import { Lightbulb, AlertCircle } from 'lucide-react'
 import type { InputSectionProps } from '../types'
 import { getStatusColor } from '../utils/colors'
 
@@ -15,6 +15,7 @@ export function InputSection({
 }: InputSectionProps) {
   const statusColor = getStatusColor(inputPower > 0)
   const lastTapRef = useRef<{ index: number; time: number } | null>(null)
+  const allDisconnected = sourceNames.every(source => !source.status)
 
   const handleTap = (index: number) => {
     const now = Date.now()
@@ -30,7 +31,7 @@ export function InputSection({
   return (
     <section className="rounded-xl md:rounded-2xl p-4 md:p-6 relative overflow-hidden" style={{
       background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
-      border: '1px solid rgba(59, 130, 246, 0.3)'
+      border: allDisconnected ? '1px solid rgba(239, 68, 68, 0.8)' : '1px solid rgba(59, 130, 246, 0.3)'
     }}>
       <div className="absolute -top-1/2 -right-1/5 w-48 h-48 pointer-events-none" style={{
         background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)'
@@ -39,8 +40,8 @@ export function InputSection({
       <div className="flex items-center justify-between mb-5 relative z-10">
          <h2 className="text-sm font-semibold text-slate-400 tracking-widest uppercase m-0">Input</h2>
          <div className="w-2 h-2 rounded-full" style={{
-           background: statusColor,
-           boxShadow: inputPower > 0 ? `0 0 12px ${statusColor}` : 'none'
+           background: allDisconnected ? '#ef4444' : statusColor,
+           boxShadow: allDisconnected ? '0 0 12px #ef4444' : (inputPower > 0 ? `0 0 12px ${statusColor}` : 'none')
          }} />
        </div>
 
@@ -53,37 +54,43 @@ export function InputSection({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 relative z-10">
-         {sourceNames.map((source, index) => (
-           <div 
-             key={source.id}
-             onDoubleClick={() => onDoubleClick(index)}
-             onTouchEnd={() => handleTap(index)}
-             className="rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-blue-500/20 hover:border-blue-500/50" 
-             style={{
-               background: 'rgba(15, 23, 42, 0.6)',
-               border: '1px solid rgba(59, 130, 246, 0.2)'
-             }}
-             title="Double click or double tap to edit"
-           >
-             {editingIndex === index ? (
-               <input
-                 type="text"
-                 value={editValue}
-                 onChange={(e) => onNameChange(e.target.value)}
-                 onBlur={() => onNameSave(index)}
-                 onKeyDown={(e) => onKeyDown(e, index)}
-                 autoFocus
-                 className="w-full bg-transparent text-xs text-blue-400 font-semibold uppercase tracking-wide text-center outline-none border-b border-blue-400"
-                 style={{fontFamily: 'inherit'}}
-               />
-             ) : (
-                <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>{source.name}</div>
+      <div className="grid grid-cols-2 gap-2 md:gap-3 relative z-10">
+          {sourceNames.map((source, index) => (
+            <div 
+              key={source.id}
+              onDoubleClick={() => onDoubleClick(index)}
+              onTouchEnd={() => handleTap(index)}
+              className="rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-blue-500/20 hover:border-blue-500/50 relative" 
+              style={{
+                background: 'rgba(15, 23, 42, 0.6)',
+                border: '1px solid rgba(59, 130, 246, 0.2)'
+              }}
+              title="Double click or double tap to edit"
+            >
+              {!source.status && (
+                <div className="absolute inset-0 rounded-lg flex flex-col items-center justify-center cursor-not-allowed" style={{ background: '#0f2744' }}>
+                  <AlertCircle size={20} className="text-red-500 mb-1" />
+                  <span className="text-xs text-red-500 font-semibold">Plug disconnected!</span>
+                </div>
               )}
-              <div className="text-base text-white font-bold mt-1 test-font-numbers">0W</div>
-           </div>
-         ))}
-       </div>
+              {editingIndex === index ? (
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={(e) => onNameChange(e.target.value)}
+                  onBlur={() => onNameSave(index)}
+                  onKeyDown={(e) => onKeyDown(e, index)}
+                  autoFocus
+                  className="w-full bg-transparent text-xs text-blue-400 font-semibold uppercase tracking-wide text-center outline-none border-b border-blue-400"
+                  style={{fontFamily: 'inherit'}}
+                />
+              ) : (
+                 <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>{source.name}</div>
+               )}
+               <div className="text-base text-white font-bold mt-1 test-font-numbers">{source.power}W</div>
+            </div>
+          ))}
+        </div>
       <div className="text-xs text-slate-500 text-center mt-2 relative z-10 flex items-center justify-center gap-2">
         <Lightbulb size={14} />
         <span>Double click to rename sources</span>

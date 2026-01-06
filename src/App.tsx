@@ -7,23 +7,25 @@ import { SystemDetailView } from './components/SystemDetailView'
 import type { StorageUnit } from './types'
 import { calculateNetPower } from './utils/calculations'
 import { isValidSourceName, validateSourceName } from './utils/validators'
-import { fetchBattery, fetchPower, fetchSources, fetchStorage, fetchOutput, updateSource } from './api/client'
+import { fetchBattery, fetchPower, fetchSources, fetchStorage, fetchOutput, updateSource, updateBattery, updatePower, updateOutput } from './api/client'
 
 function App() {
   const [showSystemDetail, setShowSystemDetail] = useState(false)
-  const [batteryLevel, setBatteryLevel] = useState(29)
-  const [availableDays, setAvailableDays] = useState(99)
-  const [availableHours, setAvailableHours] = useState(23)
+  const [batteryLevel, setBatteryLevel] = useState(0)
+  const [availableDays, setAvailableDays] = useState(0)
+  const [availableHours, setAvailableHours] = useState(0)
   const [inputPower, setInputPower] = useState(0)
   const [outputPower, setOutputPower] = useState(0)
   const [acEnabled, setAcEnabled] = useState(false)
   const [dcEnabled, setDcEnabled] = useState(false)
-  const [sourceNames, setSourceNames] = useState<Array<{ id: number; name: string }>>([])
+  const [acPower, setAcPower] = useState(0)
+  const [dcPower, setDcPower] = useState(0)
+  const [sourceNames, setSourceNames] = useState<Array<{ id: number; name: string; status: boolean; power: number }>>([])
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editValue, setEditValue] = useState('')
   const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([])
 
-  // Fetch data on mount
+  // Fetch data on mount and poll for updates
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -44,12 +46,19 @@ function App() {
         setStorageUnits(storage)
         setAcEnabled(output.acEnabled)
         setDcEnabled(output.dcEnabled)
+        setAcPower(output.acPower)
+        setDcPower(output.dcPower)
       } catch (error) {
         console.error('Failed to load initial data:', error)
       }
     }
 
     loadData()
+
+    // Poll for updates every 100ms
+    const interval = setInterval(loadData, 100)
+
+    return () => clearInterval(interval)
   }, [])
 
   // Check for ?demo parameter in URL
@@ -169,8 +178,10 @@ function App() {
               outputPower={outputPower}
               acEnabled={acEnabled}
               dcEnabled={dcEnabled}
-              onAcToggle={() => setAcEnabled(!acEnabled)}
-              onDcToggle={() => setDcEnabled(!dcEnabled)}
+              acPower={acPower}
+              dcPower={dcPower}
+              onAcToggle={() => updateOutput({ acEnabled: !acEnabled }).catch(err => console.error('Failed to update AC:', err))}
+              onDcToggle={() => updateOutput({ dcEnabled: !dcEnabled }).catch(err => console.error('Failed to update DC:', err))}
             />
           </div>
         </main>
@@ -187,60 +198,59 @@ function App() {
                   Battery Level: {batteryLevel}%
                 </label>
                 <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={batteryLevel}
-                  onChange={(e) => {
-                    const level = parseInt(e.target.value)
-                    setBatteryLevel(level)
-                    if (level === 0) {
-                      setAvailableDays(0)
-                      setAvailableHours(0)
-                    } else {
-                      setAvailableDays(99)
-                      setAvailableHours(23)
-                    }
-                  }}
-                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${batteryLevel}%, #1e293b ${batteryLevel}%, #1e293b 100%)`
-                  }}
-                />
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={batteryLevel}
+                    onChange={(e) => {
+                      const level = parseInt(e.target.value)
+                      updateBattery({ level }).catch(err => console.error('Failed to update battery:', err))
+                    }}
+                    className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${batteryLevel}%, #1e293b ${batteryLevel}%, #1e293b 100%)`
+                    }}
+                  />
               </div>
               <div>
                 <label className="block text-xs text-slate-500 mb-2 font-semibold">
                   Input Power: {inputPower}W
                 </label>
                 <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  step="1"
-                  value={inputPower}
-                  onChange={(e) => setInputPower(parseInt(e.target.value))}
-                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, #10b981 0%, #10b981 ${inputPower/10}%, #1e293b ${inputPower/10}%, #1e293b 100%)`
-                  }}
-                />
+                    type="range"
+                    min="0"
+                    max="1000"
+                    step="1"
+                    value={inputPower}
+                    onChange={(e) => {
+                      const power = parseInt(e.target.value)
+                      updatePower({ inputPower: power }).catch(err => console.error('Failed to update power:', err))
+                    }}
+                    className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, #10b981 0%, #10b981 ${inputPower/10}%, #1e293b ${inputPower/10}%, #1e293b 100%)`
+                    }}
+                  />
               </div>
               <div>
                 <label className="block text-xs text-slate-500 mb-2 font-semibold">
                   Output Power: {outputPower}W
                 </label>
                 <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  step="1"
-                  value={outputPower}
-                  onChange={(e) => setOutputPower(parseInt(e.target.value))}
-                  className="w-full h-1.5 rounded-full outline-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${outputPower/10}%, #1e293b ${outputPower/10}%, #1e293b 100%)`
-                  }}
-                />
+                    type="range"
+                    min="0"
+                    max="1000"
+                    step="1"
+                    value={outputPower}
+                    onChange={(e) => {
+                      const power = parseInt(e.target.value)
+                      updatePower({ outputPower: power }).catch(err => console.error('Failed to update power:', err))
+                    }}
+                    className="w-full h-1.5 rounded-full outline-none cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${outputPower/10}%, #1e293b ${outputPower/10}%, #1e293b 100%)`
+                    }}
+                  />
               </div>
             </div>
           </div>
