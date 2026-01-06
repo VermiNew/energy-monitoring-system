@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Lightbulb, AlertCircle } from 'lucide-react'
 import type { InputSectionProps } from '../types'
 import { getStatusColor } from '../utils/colors'
+import { useEasing } from '../hooks/useEasing'
 
 export function InputSection({
   inputPower,
@@ -16,6 +17,7 @@ export function InputSection({
   const statusColor = getStatusColor(inputPower > 0)
   const lastTapRef = useRef<{ index: number; time: number } | null>(null)
   const allDisconnected = sourceNames.every(source => !source.status)
+  const easedInputPower = useEasing(inputPower, 300)
 
   const handleTap = (index: number) => {
     const now = Date.now()
@@ -47,8 +49,12 @@ export function InputSection({
 
       <div className="mb-4 md:mb-6 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-5xl md:text-7xl font-bold text-white leading-none number-display">
-            {inputPower}
+          <span 
+            className="text-5xl md:text-7xl font-bold text-white leading-none number-display"
+            aria-label={`Input power: ${easedInputPower} watts`}
+            role="status"
+          >
+            {easedInputPower}
           </span>
           <span className="text-xl md:text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
         </div>
@@ -87,7 +93,13 @@ export function InputSection({
               ) : (
                  <div className="text-xs text-slate-400 font-semibold uppercase tracking-wide" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>{source.name}</div>
                )}
-               <div className="text-base text-white font-bold mt-1 test-font-numbers">{source.power}W</div>
+               <div 
+                 className="text-base text-white font-bold mt-1 test-font-numbers"
+                 aria-label={`${source.name} output: ${source.power} watts`}
+                 role="status"
+               >
+                 {source.power}W
+               </div>
             </div>
           ))}
         </div>

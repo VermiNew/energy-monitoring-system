@@ -1,5 +1,6 @@
 import type { OutputSectionProps } from '../types'
 import { getStatusColor } from '../utils/colors'
+import { useEasing } from '../hooks/useEasing'
 
 export function OutputSection({
   outputPower,
@@ -11,6 +12,10 @@ export function OutputSection({
   onDcToggle
 }: OutputSectionProps) {
   const statusColor = getStatusColor(acEnabled || dcEnabled)
+  const easedOutputPower = useEasing(outputPower, 300)
+  const easedAcPower = useEasing(acPower, 300)
+  const easedDcPower = useEasing(dcPower, 300)
+  
   return (
     <section className="rounded-xl md:rounded-2xl p-4 md:p-6 relative overflow-hidden" style={{
       background: 'linear-gradient(145deg, #1e3a5f 0%, #0f2744 100%)',
@@ -30,8 +35,12 @@ export function OutputSection({
 
       <div className="mb-4 md:mb-8 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-5xl md:text-7xl font-bold text-white leading-none test-font-numbers number-display">
-            {outputPower}
+          <span 
+            className="text-5xl md:text-7xl font-bold text-white leading-none test-font-numbers number-display"
+            aria-label={`Total output power: ${easedOutputPower} watts`}
+            role="status"
+          >
+            {easedOutputPower}
           </span>
           <span className="text-xl md:text-3xl text-slate-500 mb-2" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>W</span>
         </div>
@@ -44,10 +53,26 @@ export function OutputSection({
         }}>
           <div>
             <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>AC</div>
-            <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">{acPower}W</div>
+            <div 
+              className="text-sm text-slate-500 font-medium test-font-numbers number-display"
+              aria-label={`AC output: ${easedAcPower} watts`}
+              role="status"
+            >
+              {easedAcPower}W
+            </div>
             </div>
             <div
              onClick={onAcToggle}
+             onKeyDown={(e) => {
+               if (e.key === 'Enter' || e.key === ' ') {
+                 e.preventDefault()
+                 onAcToggle()
+               }
+             }}
+             role="switch"
+             aria-checked={acEnabled}
+             aria-label={`AC output toggle, currently ${acEnabled ? 'enabled' : 'disabled'}`}
+             tabIndex={0}
              className="w-14 h-8 rounded-full relative cursor-pointer transition-all border-2"
              style={{
                background: acEnabled 
@@ -69,11 +94,27 @@ export function OutputSection({
             }}>
             <div>
               <div className="text-lg font-bold text-white mb-1" style={{fontFamily: '"Orbitron", -apple-system, sans-serif'}}>DC</div>
-              <div className="text-sm text-slate-500 font-medium test-font-numbers number-display">{dcPower}W</div>
+              <div 
+                className="text-sm text-slate-500 font-medium test-font-numbers number-display"
+                aria-label={`DC output: ${easedDcPower} watts`}
+                role="status"
+              >
+                {easedDcPower}W
+              </div>
             </div>
-          <div
-            onClick={onDcToggle}
-            className="w-14 h-8 rounded-full relative cursor-pointer transition-all border-2"
+            <div
+             onClick={onDcToggle}
+             onKeyDown={(e) => {
+               if (e.key === 'Enter' || e.key === ' ') {
+                 e.preventDefault()
+                 onDcToggle()
+               }
+             }}
+             role="switch"
+             aria-checked={dcEnabled}
+             aria-label={`DC output toggle, currently ${dcEnabled ? 'enabled' : 'disabled'}`}
+             tabIndex={0}
+             className="w-14 h-8 rounded-full relative cursor-pointer transition-all border-2"
             style={{
               background: dcEnabled 
                 ? 'linear-gradient(90deg, #3b82f6 0%, #2563eb 100%)'
