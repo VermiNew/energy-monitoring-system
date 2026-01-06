@@ -8,6 +8,7 @@ import type { StorageUnit } from './types'
 import { calculateNetPower } from './utils/calculations'
 import { isValidSourceName, validateSourceName } from './utils/validators'
 import { fetchBattery, fetchPower, fetchSources, fetchStorage, fetchOutput, updateSource, updateBattery, updatePower, updateOutput } from './api/client'
+import { useDebounce } from './hooks/useDebounce'
 
 function App() {
   const [showSystemDetail, setShowSystemDetail] = useState(false)
@@ -120,6 +121,19 @@ function App() {
     }
   }
 
+  // Debounced update functions for sliders
+  const debouncedUpdateBattery = useDebounce((level: number) => {
+    updateBattery({ level }).catch(err => console.error('Failed to update battery:', err))
+  }, 300)
+
+  const debouncedUpdateInputPower = useDebounce((power: number) => {
+    updatePower({ inputPower: power }).catch(err => console.error('Failed to update power:', err))
+  }, 300)
+
+  const debouncedUpdateOutputPower = useDebounce((power: number) => {
+    updatePower({ outputPower: power }).catch(err => console.error('Failed to update power:', err))
+  }, 300)
+
   if (showSystemDetail) {
     return (
       <SystemDetailView 
@@ -204,7 +218,7 @@ function App() {
                     value={batteryLevel}
                     onChange={(e) => {
                       const level = parseInt(e.target.value)
-                      updateBattery({ level }).catch(err => console.error('Failed to update battery:', err))
+                      debouncedUpdateBattery(level)
                     }}
                     className="w-full h-1.5 rounded-full outline-none cursor-pointer"
                     style={{
@@ -224,7 +238,7 @@ function App() {
                     value={inputPower}
                     onChange={(e) => {
                       const power = parseInt(e.target.value)
-                      updatePower({ inputPower: power }).catch(err => console.error('Failed to update power:', err))
+                      debouncedUpdateInputPower(power)
                     }}
                     className="w-full h-1.5 rounded-full outline-none cursor-pointer"
                     style={{
@@ -244,7 +258,7 @@ function App() {
                     value={outputPower}
                     onChange={(e) => {
                       const power = parseInt(e.target.value)
-                      updatePower({ outputPower: power }).catch(err => console.error('Failed to update power:', err))
+                      debouncedUpdateOutputPower(power)
                     }}
                     className="w-full h-1.5 rounded-full outline-none cursor-pointer"
                     style={{

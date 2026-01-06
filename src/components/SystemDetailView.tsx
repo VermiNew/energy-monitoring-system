@@ -5,6 +5,7 @@ import { setupTimeInterval } from '../utils/time'
 import { getBatteryColor } from '../utils/colors'
 import { calculateBatteryDashOffset } from '../utils/calculations'
 import { updateBattery, updatePower } from '../api/client'
+import { useDebounce } from '../hooks/useDebounce'
 
 export function SystemDetailView({
   onBack,
@@ -24,6 +25,18 @@ export function SystemDetailView({
   const [time, setTime] = useState<string>('')
   const batteryColorValue = getBatteryColor(batteryLevel)
   const dashOffset = calculateBatteryDashOffset(batteryLevel)
+
+  const debouncedUpdateBattery = useDebounce((level: number) => {
+    updateBattery({ level }).catch(err => console.error('Failed to update battery:', err))
+  }, 300)
+
+  const debouncedUpdateInputPower = useDebounce((power: number) => {
+    updatePower({ inputPower: power }).catch(err => console.error('Failed to update power:', err))
+  }, 300)
+
+  const debouncedUpdateOutputPower = useDebounce((power: number) => {
+    updatePower({ outputPower: power }).catch(err => console.error('Failed to update power:', err))
+  }, 300)
 
   useEffect(() => {
     const cleanup = setupTimeInterval(setTime)
@@ -214,7 +227,7 @@ export function SystemDetailView({
                    value={batteryLevel}
                    onChange={(e) => {
                      const level = parseInt(e.target.value)
-                     updateBattery({ level }).catch(err => console.error('Failed to update battery:', err))
+                     debouncedUpdateBattery(level)
                    }}
                    className="w-full h-1.5 rounded-full outline-none cursor-pointer"
                    style={{
@@ -234,7 +247,7 @@ export function SystemDetailView({
                    value={inputPower}
                    onChange={(e) => {
                      const power = parseInt(e.target.value)
-                     updatePower({ inputPower: power }).catch(err => console.error('Failed to update power:', err))
+                     debouncedUpdateInputPower(power)
                    }}
                    className="w-full h-1.5 rounded-full outline-none cursor-pointer"
                    style={{
@@ -254,7 +267,7 @@ export function SystemDetailView({
                    value={outputPower}
                    onChange={(e) => {
                      const power = parseInt(e.target.value)
-                     updatePower({ outputPower: power }).catch(err => console.error('Failed to update power:', err))
+                     debouncedUpdateOutputPower(power)
                    }}
                    className="w-full h-1.5 rounded-full outline-none cursor-pointer"
                    style={{
